@@ -29,6 +29,7 @@ export default {
   background-color: #7f95ff;
   cursor: default;
   transition: 0.8s;
+  max-height: 100px;
 }
 
 h2 {

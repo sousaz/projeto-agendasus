@@ -516,7 +516,7 @@ export default {
         })
       } catch (error) {
         toast.error(error.response.data["msg"], {
-          autoClose: 2000,
+          autoClose: 5000,
           position: 'top-center',
         })
         console.log(error);
@@ -586,7 +586,7 @@ legend {
 }
 
 legend p {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 
@@ -639,11 +639,12 @@ label {
 .form-group {
   display: flex;
   flex-direction: column;
-  padding: 20px 100px;
+  padding: 0 100px 15px 100px;
   background-color: #dadff5;
   border-radius: 20px 20px 20px 20px;
   width: 550px;
 }
+
 .box {
   display: flex;
   flex-direction: column;

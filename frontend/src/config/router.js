@@ -4,7 +4,6 @@ import SaibaMaisPage from '@/pages/SaibaMaisPage'
 import LoginPage from '@/pages/LoginPage'
 import RegisterPage from '@/pages/RegisterPage'
 import UserPage from '@/pages/UserPage'
-import HomePage from '@/pages/HomePage'
 import SchedulePage from '@/pages/SchedulePage'
 
 
@@ -38,7 +37,7 @@ const routes = [
                 name: "MainContent",
                 path: '',
                 components: {
-                    userContent: HomePage
+                    userContent: SchedulePage
                 }
             },
             {

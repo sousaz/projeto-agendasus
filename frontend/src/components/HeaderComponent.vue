@@ -15,7 +15,7 @@
     <h1>AGENDASUS</h1>
     <div>
       <router-link v-if="!isLogged" to="/login"><button class="login-btn">Login</button></router-link>
-      <button v-else class="login-btn logout">Sair</button>
+      <button @click="logout()" v-else class="login-btn logout">Sair</button>
     </div>
   </header>
 </template>
@@ -32,6 +32,11 @@ export default {
     isLoggedCheck() {
       const token = localStorage.getItem('token')
       return token ? this.isLogged = true : this.isLogged
+    },
+    logout() {
+      localStorage.removeItem('token')
+      this.isLogged = false
+      this.$router.push('/');
     }
   },
   mounted() {

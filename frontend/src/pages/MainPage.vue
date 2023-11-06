@@ -6,7 +6,7 @@
       label2="que nossa plataforma de agendamento de consultas pode oferecer."
     />
     <section class="section2">
-      <div v-for="(card, i) in cards" :key="i" class="card" :v-if="card.show === true">
+      <div v-for="(card, i) in cards" :key="i" class="card" v-show="card.show !== this.isLogged">
         <img :src="card.url" alt="Icon" />
         <router-link :to="card.to">
           <button class="card-btn">{{ card.text }}</button>
@@ -27,12 +27,22 @@ export default {
   },
   data() {
     return{
+      isLogged: false,
       cards: [
-        { url: "/assets/imgs/iconAgendar.svg", text: "Cadastre-se.", to: "/", show: false},
-        { url: "/assets/imgs/iconSaiba.svg", text: "Minhas consultas.", to: "/saibaMais", show: true},
-        { url: "/assets/imgs/iconConsultar.svg", text: "Agende sua consulta.", to: "/", show: true},
-        { url: "/assets/imgs/iconSaiba.svg", text: "Saiba Mais.", to: "/saibaMais", show: true},
-      ]
+        { url: "/assets/imgs/iconAgendar.svg", text: "Cadastre-se.", to: "/", show: true},
+        { url: "/assets/imgs/iconConsultar.svg", text: "Agende sua consulta.", to: "/"},
+        { url: "/assets/imgs/iconSaiba.svg", text: "Minhas consultas.", to: "/saibaMais", show: false},
+        { url: "/assets/imgs/iconSaiba.svg", text: "Saiba Mais.", to: "/saibaMais"},
+      ],
+    }
+  },
+  mounted() {
+    this.isLoggedCheck()
+  },
+  methods: {
+    isLoggedCheck() {
+      const token = localStorage.getItem('token')
+      return token ? this.isLogged = true : this.isLogged
     }
   }
 };

@@ -87,7 +87,7 @@ export default {
                 position: 'top-center',
             })
             setTimeout(() => {
-                this.$router.push('/user');
+                this.$router.push('/');
             }, 2000);
         }
 
