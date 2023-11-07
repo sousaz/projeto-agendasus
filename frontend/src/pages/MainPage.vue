@@ -27,7 +27,6 @@ export default {
   },
   data() {
     return{
-      isLogged: false,
       cards: [
         { url: "/assets/imgs/iconAgendar.svg", text: "Cadastre-se.", to: "/", show: true},
         { url: "/assets/imgs/iconConsultar.svg", text: "Agende sua consulta.", to: "/"},
@@ -36,13 +35,11 @@ export default {
       ],
     }
   },
-  mounted() {
-    this.isLoggedCheck()
-  },
   methods: {
-    isLoggedCheck() {
-      const token = localStorage.getItem('token')
-      return token ? this.isLogged = true : this.isLogged
+  },
+  computed: {
+    isLogged(){
+      return this.$store.getters.isLogged
     }
   }
 };

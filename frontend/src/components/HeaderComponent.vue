@@ -25,22 +25,20 @@ export default {
   name: "HeaderComponent",
   data() {
     return {
-      isLogged: false,
     }
   },
   methods: {
-    isLoggedCheck() {
-      const token = localStorage.getItem('token')
-      return token ? this.isLogged = true : this.isLogged
-    },
     logout() {
       localStorage.removeItem('token')
-      this.isLogged = false
-      this.$router.push('/');
+      localStorage.removeItem('id')
+      this.$store.commit('logout')
+      this.$router.replace('/');
     }
   },
-  mounted() {
-    this.isLoggedCheck()
+  computed: {
+    isLogged(){
+      return this.$store.getters.isLogged
+    }
   }
 };
 </script>

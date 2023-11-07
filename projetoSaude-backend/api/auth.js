@@ -148,7 +148,21 @@ module.exports = {
         }
     },
 
-    tokenValidate(req, res) {
-        
+    validateToken(req, res) {
+        const authHeader = req.headers['authorization']
+        const token = authHeader
+
+        if(!token) 
+            res.status(401).json({ msg: 'Acesso negado!!' })
+
+        try {
+            const secret = process.env.SECRET
+
+            jwt.verify(token, secret)
+
+            res.status(200).json({ msg: 'Acesso liberado!!', validate: true})
+        } catch (error) {
+            res.status(400).json({ msg: 'Token invalido!!' })
+        }
     }
 }

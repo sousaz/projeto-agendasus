@@ -5,6 +5,10 @@ import LoginPage from '@/pages/LoginPage'
 import RegisterPage from '@/pages/RegisterPage'
 import UserPage from '@/pages/UserPage'
 import SchedulePage from '@/pages/SchedulePage'
+import store from './store'
+
+// import axios from 'axios'
+
 
 
 const routes = [
@@ -32,6 +36,7 @@ const routes = [
         name: 'UserScreen',
         path: '/user',
         component: UserPage,
+        meta: {requiresAuth: true},
         children: [
             {
                 name: "MainContent",
@@ -56,5 +61,22 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 });
+
+router.beforeEach(async (to, from, next) => {
+  await store.dispatch('initializeApp');
+
+  const token = localStorage.getItem('token');
+
+  if (to.meta.requiresAuth && !store.state.isAuthenticated) {
+    if (!token) {
+      next('/login');
+    } else {
+      next(); 
+    }
+  } else {
+    next();
+  }
+});
+
 
 export default router;

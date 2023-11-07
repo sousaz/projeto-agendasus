@@ -5,7 +5,8 @@ const Consulta = mongoose.model('Consulta', {
     data: String,
     tipo: String,
     id_paciente: String,
-    id_medico: String
+    id_medico: String,
+    id_ubs: String
 })
 
 module.exports = Consulta

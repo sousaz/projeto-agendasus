@@ -1,6 +1,7 @@
 const Paciente = require('../model/Paciente')
 const Medico = require('../model/Medico')
 const Consulta = require('../model/Consulta')
+const Ubs = require('../model/Ubs')
 const limit = 10
 
 module.exports = {
@@ -14,7 +15,7 @@ module.exports = {
         }
     },
     async saveSchedule(req, res) {
-        const { horario, data, tipo, id_medico } = req.body
+        const { horario, data, tipo, id_medico, id_ubs } = req.body
 
         if(!horario)
             return res.status(422).json({ msg: "O horario é obrigatório!" })
@@ -24,6 +25,8 @@ module.exports = {
             return res.status(422).json({ msg: "O tipo de consulta é obrigatório!" })
         if(!id_medico)
             return res.status(422).json({ msg: "O médico é obrigatório!" })
+        if(!id_ubs)
+            return res.status(422).json({ msg: "A ubs é obrigatório!" })
 
         const consultaExiste = await Consulta.findOne({ horario, data })
 
@@ -35,11 +38,17 @@ module.exports = {
         if(!medicoExiste)
             return res.status(422).json({ msg: "médico não cadastrado!" })
 
+        const ubsExiste = await Ubs.findById(id_medico)
+
+        if(!ubsExiste)
+            return res.status(422).json({ msg: "ubs não cadastrado!" })
+
         const consulta = new Consulta({
             horario,
             data,
             tipo,
             id_medico,
+            id_ubs,
         })
 
         try {
@@ -50,7 +59,6 @@ module.exports = {
         }
     },
     async makeSchedule(req, res) {
-        console.log('entrou')
         const { horario, data, tipo, id_medico, id_paciente } = req.body
         const id = req.params.id
 

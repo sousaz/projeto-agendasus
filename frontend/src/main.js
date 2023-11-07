@@ -6,12 +6,14 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import { faPhone, faCalendarCheck } from '@fortawesome/free-solid-svg-icons'
 import './config/axios'
+import store from './config/store'
 
 library.add(faCalendarCheck, faPhone)
 
 createApp(App)
     .component("fa", FontAwesomeIcon)
     .use(router)
+    .use(store)
     .use(VueTheMask)
     .mount('#app')
 

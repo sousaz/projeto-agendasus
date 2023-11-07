@@ -86,6 +86,7 @@ export default {
                 autoClose: 2000,
                 position: 'top-center',
             })
+            this.$store.commit('login')
             setTimeout(() => {
                 this.$router.push('/');
             }, 2000);

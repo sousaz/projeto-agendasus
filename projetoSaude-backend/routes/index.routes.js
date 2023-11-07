@@ -15,6 +15,8 @@ router.route("/consulta/:id").put(schedule.makeSchedule)
     .get(schedule.loadUserSchedule)
 //     .delete(consulta.delete)
 
+router.route("/auth/validateToken").post(auth.validateToken)
+
 // router.route("/endereco").get(endereco.all)
 //     .post(endereco.create)
 // router.route("/endereco/:id").put(endereco.update)
