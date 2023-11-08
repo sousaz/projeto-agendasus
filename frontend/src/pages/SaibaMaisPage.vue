@@ -2,14 +2,16 @@
   <div>
     <HeaderComponent />
     <SubtitleComponent
-      label1='Siga o passo a passo abaixo na tela de "cadastro".'
+      label1='Agendar consultas online nunca foi tão simples.'
+      label2='Veja como funciona!'
     />
     <section class="cards">
         <div v-for="(card, i) in cards" :key="i" class="card-item">
             <div class="text">
-                <p>{{ i + 1 }}</p><h6>o</h6>
+                <img class="icon" :src="card.url" alt="Icon" />
+                <h3>{{ i + 1 + card.type }}</h3>
             </div>
-            <h5>{{ card.text }}</h5>
+            <p>{{ card.text }}</p>
         </div>
     </section>
   </div>
@@ -27,10 +29,10 @@ export default {
   data() {
     return {
         cards: [
-            { text: "Faça seu cadastro."},
-            { text: "Selecione o serviço."},
-            { text: "Escolha o dia e horário."},
-            { text: "Finalize o agendamento."},
+            { url: "/assets/imgs/iconRegister.svg", type: ". Cadastro", text: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaFaça seu cadastro."},
+            { url: "", type: "", text: "Selecione o serviço."},
+            { url: "", type: "", text: "Escolha o dia e horário."},
+            { url: "", type: "", text: "Finalize o agendamento."},
         ]
     }
   }
@@ -42,36 +44,15 @@ export default {
     font-family: "coves";
 }
 
-h2 {
-  color: #fff;
-  font-size: 2rem;
-}
-
-h5{
-    cursor: default;
-    color: #fff;
-    font-size: 20px;
-}
-
-
-h6{
-    cursor: default;
-    color: #fff;
-    font-size: 20px;
-    padding-top: 20px;
-}
-
-p{
-    cursor: default;
-    color: #fff;
-    font-size: 150px;
-    padding-bottom: 20px;
+.icon {
+    width: 100px;
 }
 
 
 .text{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .cards{
@@ -89,7 +70,7 @@ p{
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 
     font-size: 20px;

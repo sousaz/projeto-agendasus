@@ -2,8 +2,8 @@
   <div>
     <HeaderComponent />
     <SubtitleComponent
-      label1="Olá usuário, acesse todas as aplicações "
-      label2="que nossa plataforma de agendamento de consultas pode oferecer."
+      label1="Faça seu agendamento online com comodidade,"
+      label2="em qualquer hora e lugar"
     />
     <section class="section2">
       <div v-for="(card, i) in cards" :key="i" class="card" v-show="card.show !== this.isLogged">
@@ -28,10 +28,10 @@ export default {
   data() {
     return{
       cards: [
-        { url: "/assets/imgs/iconAgendar.svg", text: "Cadastre-se.", to: "/", show: true},
-        { url: "/assets/imgs/iconConsultar.svg", text: "Agende sua consulta.", to: "/"},
-        { url: "/assets/imgs/iconSaiba.svg", text: "Minhas consultas.", to: "/saibaMais", show: false},
-        { url: "/assets/imgs/iconSaiba.svg", text: "Saiba Mais.", to: "/saibaMais"},
+        { url: "/assets/imgs/iconAgendar.svg", text: "Cadastre-se", to: "/", show: true},
+        { url: "/assets/imgs/iconConsultar.svg", text: "Agende sua consulta", to: "/"},
+        { url: "/assets/imgs/notebook-svgrepo-com.svg", text: "Minhas consultas", to: "/saibaMais", show: false},
+        { url: "/assets/imgs/iconSaiba.svg", text: "Saiba Mais", to: "/saibaMais"},
       ],
     }
   },

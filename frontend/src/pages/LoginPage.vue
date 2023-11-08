@@ -35,7 +35,7 @@
             </div>
 
             <div>
-              <button @click="login()" type="button" class="enter-btn">Entrar</button>
+              <button @click="login" type="submit" class="enter-btn">Entrar</button>
             </div>
 
             <div>
@@ -44,7 +44,7 @@
 
             <div>
               <router-link to="/cadastrar"
-                ><button class="register-btn">Cadastre-se</button></router-link
+                ><button type="button" class="register-btn">Cadastre-se</button></router-link
               >
             </div>
           </div>
@@ -69,7 +69,8 @@ export default {
     };
     },
     methods: {
-    async login() {
+    async login(e) {
+      e.preventDefault()
         const url = "http://localhost:3333/api/auth/login";
         try {
         const response = await axios.post(url, {
