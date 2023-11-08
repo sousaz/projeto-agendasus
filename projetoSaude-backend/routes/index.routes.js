@@ -3,6 +3,7 @@ const router = express.Router()
 const paciente = require("../controller/paciente.controller")
 const auth = require("../api/auth")
 const schedule = require("../api/schedule")
+const options = require("../api/options")
 
 
 router.route("/auth/register").post(auth.registerUser)
@@ -10,12 +11,14 @@ router.route("/auth/login").post(auth.loginUser)
 
 router.route("/consulta").get(schedule.loadSchedule)
     .post(schedule.saveSchedule)
-router.route("/auth/consulta/:page").get(schedule.loadSchedule)
+router.route("/auth/consulta/:page/:ubs/:tipo").get(schedule.loadSchedule)
 router.route("/consulta/:id").put(schedule.makeSchedule)
     .get(schedule.loadUserSchedule)
 //     .delete(consulta.delete)
 
 router.route("/auth/validateToken").post(auth.validateToken)
+
+router.route("/options").get(options.loadOptions)
 
 // router.route("/endereco").get(endereco.all)
 //     .post(endereco.create)

@@ -1,25 +1,28 @@
 <template>
     <div id="schedule">
-        <div v-if="!tableView" class="form-select">
+        <div v-show="!tableView" class="form-select">
             <label for="ubs">Em qual UBS deseja marcar a consulta?</label>
             <select name="ubs" id="ubs" class="select" v-model="selectedUbs">
-                <option class="option" v-for="(option, i) in optionsQuery" :key="i" value="">{{ option }}</option>
+                <option value="" disabled selected>Selecione uma UBS</option>
+                <option class="option" v-for="(option, i) in optionsUbs" :key="i" :value="option._id">{{ option.nome }}</option>
             </select>
 
             <label for="ubs">Que tipo de consulta seria?</label>
             <select name="ubs" id="ubs" class="select" v-model="selectedQuery">
-                <option class="option" v-for="(option, i) in optionsQuery" :key="i" value="">{{ option }}</option>
+                <option value="" disabled selected>Selecione o tipo de consulta</option>
+                <option class="option" v-for="(option, i) in optionsQuery" :key="i" :value="option">{{ option }}</option>
             </select>
 
-            <button class="startSchedule-btn">Ver consultas</button>
+            <button @click="loadTable()" class="startSchedule-btn">Ver consultas</button>
 
         </div>
-        <TableComponent/>
+        <TableComponent v-show="tableView"/>
     </div>
 </template>
 
 
 <script>
+import axios from 'axios'
 import TableComponent from '../components/TableComponent.vue';
 export default {
     name: "SchedulePage",
@@ -30,11 +33,43 @@ export default {
         return{
             selectedUbs: '',
             selectedQuery: '',
-            optionsQuery: ['opa', 'oi', 'dijawhnd'],
-            optionsUbs: ['opa', 'oi', 'dijawhnd'],
+            optionsQuery: [],
+            optionsUbs: [],
             tableView: false,
-            teste: { header: ['1','2','3','4','5'], content: ['a','b','c','d','e','f','g','h','i','l']}
+            currentPage: 1,
         }
+    },
+    computed: {
+        tableData(){
+            return this.$store.state.tableData
+        }
+    },
+    methods: {
+        async loadOptions() {
+            const url = `http://localhost:3333/api/options`
+
+            try {
+                const response = await axios.get(url)
+                this.optionsUbs = response.data.nomeUbs
+                this.optionsQuery = response.data.tipoConsulta
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async loadTable() {
+            try {
+                this.$store.commit('setPage', this.currentPage)
+                this.$store.commit('setUbs', this.selectedUbs)
+                this.$store.commit('setQuery', this.selectedQuery)
+                await this.$store.dispatch('loadTable')
+                this.tableView = true
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }, 
+    async mounted() {
+        this.loadOptions()
     }
 };
 </script>

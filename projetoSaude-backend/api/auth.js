@@ -130,7 +130,7 @@ module.exports = {
        }
     },
 
-    checkToken(req, res, next) {
+    async checkToken(req, res, next) {
         const authHeader = req.headers['authorization']
         const token = authHeader
 
@@ -140,7 +140,7 @@ module.exports = {
         try {
             const secret = process.env.SECRET
 
-            jwt.verify(token, secret)
+            await jwt.verify(token, secret)
 
             next()
         } catch (error) {
@@ -148,17 +148,17 @@ module.exports = {
         }
     },
 
-    validateToken(req, res) {
+    async validateToken(req, res) {
         const authHeader = req.headers['authorization']
         const token = authHeader
-
+        
         if(!token) 
-            res.status(401).json({ msg: 'Acesso negado!!' })
-
-        try {
-            const secret = process.env.SECRET
-
-            jwt.verify(token, secret)
+        res.status(401).json({ msg: 'Acesso negado!!' })
+    
+    try {
+        const secret = process.env.SECRET
+        
+        await jwt.verify(token, secret)
 
             res.status(200).json({ msg: 'Acesso liberado!!', validate: true})
         } catch (error) {

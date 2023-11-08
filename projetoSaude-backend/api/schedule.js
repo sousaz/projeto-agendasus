@@ -6,9 +6,9 @@ const limit = 10
 
 module.exports = {
     async loadSchedule(req, res) {
-        const page = req.params.page
+        const { page, ubs, tipo } = req.params
         try {
-            const consulta = await Consulta.find({ id_paciente: null }).skip(page * limit - limit).limit(limit)
+            const consulta = await Consulta.find({ id_paciente: null, id_ubs: ubs, tipo: tipo }).skip(page * limit - limit).limit(limit)
             res.status(200).json(consulta)
         } catch (error) {
             res.status(400).json({ msg: 'Erro na consulta'})

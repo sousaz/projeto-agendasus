@@ -2,7 +2,6 @@
     <div id="nav">
         <aside class="aside">
             <nav class="nav">
-                <router-link to="/user"><div class="link">Início</div></router-link>
                 <router-link to="/user/agendar"><div class="link">Agendar</div></router-link>
                 <router-link to="/user/opa"><div class="link">Minhas consultas</div></router-link>
             </nav>
