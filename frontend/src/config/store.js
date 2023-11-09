@@ -8,6 +8,7 @@ export default new Vuex.Store({
     selectedUbs: '',
     selectedQuery: '',
     tableData: {},
+    loadMore: true
   },
   mutations: {
     login(state) {
@@ -17,7 +18,8 @@ export default new Vuex.Store({
       state.isLogged = false
     },
     setPage(state, page) {
-      state.currentPage = page
+      if(page > 0)
+        state.currentPage = page
     },
     setUbs(state, ubs) {
       state.selectedUbs = ubs
@@ -27,6 +29,9 @@ export default new Vuex.Store({
     },
     setTableData(state, data) {
       state.tableData = data
+    },
+    setLoadMore(state, data) {
+      state.loadMore = data
     },
   },
   getters: {
@@ -54,11 +59,17 @@ export default new Vuex.Store({
       }
     },
     async loadTable(context) {
-      const url = `http://localhost:3333/api/auth/consulta/${context.state.currentPage}/${context.state.selectedUbs}/${context.state.selectedQuery}`
+      // const url = `http://localhost:3333/api/auth/consulta/${context.state.currentPage}/${context.state.selectedUbs}/${context.state.selectedQuery}`
+      const url = `http://localhost:3333/api/teste/${context.state.currentPage}`
       try {
         const response = await axios.get(url)
-        context.commit('setTableData', response.data)
-        console.log(context.state.tableData)
+        if(response.data.length !== 0) {
+          context.commit('setPage', context.state.currentPage + 1)
+          context.commit('setTableData', response.data)
+          context.commit('setLoadMore', true)
+        }else {
+          context.commit('setLoadMore', false)
+        }
       } catch (error) {
         console.log(error)
       }

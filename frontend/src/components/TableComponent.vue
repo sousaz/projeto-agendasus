@@ -20,21 +20,17 @@
           <td class="table-cell">{{ tableData[i - 1].data }}</td>
           <td class="table-cell">{{ tableData[i - 1].horario }}</td>
           <td class="table-cell">
-            <button @click="makeSchedule(i - 1)">
+            <button v-show="buttonView" class="check" @click="makeSchedule(i - 1)">
               Selecionar<fa class="calendar-check" icon="calendar-check" />
             </button>
           </td>
         </tr>
       </tbody>
-      <!-- <tfoot class="table-footer">
-        <tr class="table-row">
-          <td class="table-header-content">aa</td>
-          <td class="table-header-content">aa</td>
-          <td class="table-header-content">aa</td>
-          <td class="table-header-content">aa</td>
-        </tr>
-      </tfoot> -->
     </table>
+    <div class="group-btn">
+      <button @click="backPage(this.$store.state.currentPage)" v-show="this.$store.state.currentPage > 2 || !loadMore" class="schedule-btn">Voltar</button>
+      <button @click="decideTable()" v-show="loadMore" class="schedule-btn">Carregar mais</button>
+    </div>
   </div>
 </template>
 
@@ -44,12 +40,16 @@ export default {
   name: "TableComponent",
   data() {
     return {
-      tableHeader: ["Id", "Medico", "Tipo", "Dia", "Horario"],
+      tableHeader: ["Id", "Medico", "Tipo", "Dia", "Horario", ""],
+      buttonView: true,
     };
   },
   computed: {
     tableData() {
       return this.$store.state.tableData;
+    },
+    loadMore() {
+      return this.$store.state.loadMore;
     },
   },
   methods: {
@@ -68,24 +68,101 @@ export default {
         console.log(error);
       }
     },
-  },
-  watch: {
-    propTableData: function (newData) {
-      this.tableData = newData;
+    async loadMyTable() {
+      if(this.$route.path === '/paciente/minhasconsultas'){
+        try {
+          this.buttonView = false
+          const id = localStorage.getItem("id");
+          const url = `http://localhost:3333/api/consulta/${id}/${this.$store.state.currentPage}`;
+          const response = await axios.get(url)
+          console.log(this.$store.state.currentPage)
+          console.log(response.data)
+          if(response.data.length !== 0) {
+            this.$store.commit('setPage', this.$store.state.currentPage + 1)
+            this.$store.commit('setTableData', response.data)
+            this.$store.commit('setLoadMore', true)
+          }else {
+            this.$store.commit('setLoadMore', false)
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
     },
+    async decideTable() {
+      if(this.$route.path === '/paciente/minhasconsultas'){
+        this.loadMyTable()
+        return
+      }
+      
+      await this.$store.dispatch('loadTable')
+    },
+    backPage(current) {
+      this.$store.commit('setPage', (current - 2))
+      this.decideTable()
+    }
   },
+  mounted() {
+    this.loadMyTable()
+  }
 };
 </script>
 
 <style>
-th {
-  border: 2px solid red;
+#table {
+  width: 30%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-td {
-  border: 2px solid blue;
+
+.group-btn {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+.table-head {
+  background-color: #3a58f0;
+  color: #fff;
+}
+
+.table-row {
+  border-bottom: 1px solid #dce2fa;
+  text-align: center;
+}
+
+.table-header-content {
+  padding: 10px;
+}
+
+.table-cell {
+  padding: 10px;
+}
+
+.check {
+  background-color: #3a58f0;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.check:hover {
+  background-color: #fff;
+  color: #3a58f0;
 }
 
 .calendar-check {
-  color: #000;
+  margin-left: 5px;
 }
 </style>

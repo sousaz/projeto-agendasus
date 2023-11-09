@@ -98,12 +98,21 @@ module.exports = {
     }, 
     async loadUserSchedule(req, res) {
         const id = req.params.id
+        const page = req.params.page
         try {
-            const consulta = await Consulta.find({ id_paciente: id })
+            const consulta = await Consulta.find({ id_paciente: id }).skip(page * limit - limit).limit(limit)
             res.status(200).json(consulta)
         } catch (error) {
             res.status(400).json({ msg: 'Erro na consulta'})
         }
-
+    },
+    async teste(req, res) {
+        const id = req.params.id
+        try {
+            const consulta = await Consulta.find().skip(id * limit - limit).limit(limit)
+            res.status(200).json(consulta)
+        } catch (error) {
+            res.status(400).json({ msg: 'Erro na consulta'})
+        }
     }
 }

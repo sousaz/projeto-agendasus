@@ -6,13 +6,16 @@ const schedule = require("../api/schedule")
 const options = require("../api/options")
 
 
+
+router.route('/teste/:id').get(schedule.teste)
+
 router.route("/auth/register").post(auth.registerUser)
 router.route("/auth/login").post(auth.loginUser)
 
 router.route("/consulta").get(schedule.loadSchedule)
     .post(schedule.saveSchedule)
 router.route("/auth/consulta/:page/:ubs/:tipo").get(schedule.loadSchedule)
-router.route("/consulta/:id").put(schedule.makeSchedule)
+router.route("/consulta/:id/:page").put(schedule.makeSchedule)
     .get(schedule.loadUserSchedule)
 //     .delete(consulta.delete)
 

@@ -11,7 +11,9 @@
                 <img class="icon" :src="card.url" alt="Icon" />
                 <h3>{{ i + 1 + card.type }}</h3>
             </div>
-            <p>{{ card.text }}</p>
+            <div class="paragraph">
+                <p>{{ card.text }}</p>  
+            </div>
         </div>
     </section>
   </div>
@@ -29,10 +31,10 @@ export default {
   data() {
     return {
         cards: [
-            { url: "/assets/imgs/iconRegister.svg", type: ". Cadastro", text: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaFaça seu cadastro."},
-            { url: "", type: "", text: "Selecione o serviço."},
-            { url: "", type: "", text: "Escolha o dia e horário."},
-            { url: "", type: "", text: "Finalize o agendamento."},
+            { url: "/assets/imgs/iconRegister.svg", type: ". Cadastro", text: "Faça seu cadastro para ter acesso aos serviços disponíveis. Se você já possui cadastro, clique em LOGIN."},
+            { url: "/assets/imgs/iconConfirmar.svg", type: ". Selecione o Serviço", text: "Escolha o serviço para o qual deseja agendar o atendimento."},
+            { url: "/assets/imgs/iconCalendario.svg", type: ". Escolha o dia e horário", text: "Informe o dia e horário, dentre os horários disponíveis e salve o Agendamento."},
+            { url: "/assets/imgs/iconFinalizar.svg", type: ". Finalize o agendamento", text: "No dia agendado, dirija-se até o local do atendimento, confirme sua presença e aguarde ser chamado."},
         ]
     }
   }
@@ -53,6 +55,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
 
 .cards{
@@ -76,21 +79,22 @@ export default {
     font-size: 20px;
     color: #fff;
     transition: 0.5s;
+    overflow: hidden;
 }
+
+.paragraph {
+    width: 100%; 
+}
+
+.paragraph p {
+    font-size: 1.5rem;
+    margin: 0 15px;
+    text-align: center;
+}
+
 .card-item:hover{
     transform: scale(1.05);
 }
-.card-item:hover h6{
-    transform: scale(1.2);
-    transition: 1s;
-}
-.card-item:hover p{
-    transform: scale(1.2);
-    transition: 1s;
-}
-.card-item:hover h5{
-    transition: 1s;
-    transform: scale(1.2);
-}
+
 
 </style>

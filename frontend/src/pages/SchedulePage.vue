@@ -1,7 +1,7 @@
 <template>
     <div id="schedule">
         <div v-show="!tableView" class="form-select">
-            <label for="ubs">Em qual UBS deseja marcar a consulta?</label>
+            <label class="options-label" for="ubs">Em qual UBS deseja marcar a consulta?</label>
             <select name="ubs" id="ubs" class="select" v-model="selectedUbs">
                 <option value="" disabled selected>Selecione uma UBS</option>
                 <option class="option" v-for="(option, i) in optionsUbs" :key="i" :value="option._id">{{ option.nome }}</option>
@@ -13,7 +13,7 @@
                 <option class="option" v-for="(option, i) in optionsQuery" :key="i" :value="option">{{ option }}</option>
             </select>
 
-            <button @click="loadTable()" class="startSchedule-btn">Ver consultas</button>
+            <button @click="loadTable()" class="schedule-btn">Ver consultas</button>
 
         </div>
         <TableComponent v-show="tableView"/>
@@ -36,16 +36,18 @@ export default {
             optionsQuery: [],
             optionsUbs: [],
             tableView: false,
-            currentPage: 1,
         }
     },
     computed: {
         tableData(){
             return this.$store.state.tableData
-        }
+        },
     },
     methods: {
         async loadOptions() {
+            if(this.$route.path === '/paciente/minhasconsultas'){
+                this.tableView = true
+            }
             const url = `http://localhost:3333/api/options`
 
             try {
@@ -58,7 +60,6 @@ export default {
         },
         async loadTable() {
             try {
-                this.$store.commit('setPage', this.currentPage)
                 this.$store.commit('setUbs', this.selectedUbs)
                 this.$store.commit('setQuery', this.selectedQuery)
                 await this.$store.dispatch('loadTable')
@@ -66,7 +67,7 @@ export default {
             } catch (error) {
                 console.log(error)
             }
-        }
+        },
     }, 
     async mounted() {
         this.loadOptions()
@@ -88,6 +89,46 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.form-select {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.options-label {
+  display: block;
+  margin-bottom: 10px;
+  color: #3a58f0;
+}
+
+.select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dce2fa;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.option {
+  color: #3a58f0;
+}
+
+.schedule-btn {
+  background-color: #3a58f0;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.schedule-btn:hover {
+  background-color: #dce2fa;
+  color: #3a58f0;
 }
 
 </style>

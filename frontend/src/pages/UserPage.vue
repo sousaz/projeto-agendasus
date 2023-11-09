@@ -1,20 +1,17 @@
 <template>
     <div class="user">
         <HeaderComponent />
-        <NavComponent />
         <ContentComponent />
     </div>
 </template>
 
 <script>
 import HeaderComponent from '../components/HeaderComponent.vue';
-import NavComponent from '../components/NavComponent.vue';
 import ContentComponent from '../components/ContentComponent.vue';
 export default {
     name: "UserPage",
     components: {
         HeaderComponent,
-        NavComponent,
         ContentComponent
     }
 };
@@ -28,6 +25,6 @@ export default {
 		grid-template-columns: 300px 1fr;
         grid-template-areas: 
             "header header"
-            "menu content";
+            "content content";
     }
 </style>

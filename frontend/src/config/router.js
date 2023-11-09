@@ -5,6 +5,7 @@ import LoginPage from '@/pages/LoginPage'
 import RegisterPage from '@/pages/RegisterPage'
 import UserPage from '@/pages/UserPage'
 import SchedulePage from '@/pages/SchedulePage'
+// import TableComponent from '@/components/TableComponent'
 import store from './store'
 
 // import axios from 'axios'
@@ -34,7 +35,7 @@ const routes = [
     },
     {
         name: 'UserScreen',
-        path: '/user',
+        path: '/paciente',
         component: UserPage,
         meta: {requiresAuth: true},
         children: [
@@ -47,7 +48,7 @@ const routes = [
             },
             {
                 name: "AgendarContent",
-                path: '/user/agendar',
+                path: '/paciente/minhasconsultas',
                 components: {
                     userContent: SchedulePage
                 }
