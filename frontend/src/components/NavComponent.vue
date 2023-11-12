@@ -2,8 +2,9 @@
     <div id="nav">
         <aside class="aside">
             <nav class="nav">
-                <router-link to="/user/agendar"><div class="link">Agendar</div></router-link>
-                <router-link to="/user/opa"><div class="link">Minhas consultas</div></router-link>
+                <router-link to="/ubs"><div class="link">Cadastrar médicos</div></router-link>
+                <router-link to="/ubs/consulta"><div class="link">Cadastrar consultas</div></router-link>
+                <router-link to="/ubs/consultas"><div class="link">Consultas gerais</div></router-link>
             </nav>
         </aside>
     </div>

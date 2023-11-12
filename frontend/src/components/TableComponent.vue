@@ -15,7 +15,8 @@
       <tbody class="table-body">
         <tr v-for="i in tableData.length" :key="i" class="table-row">
           <td class="table-cell">{{ i }}</td>
-          <td class="table-cell">{{ tableData[i - 1].id_medico }}</td>
+          <td class="table-cell">{{ tableData[i - 1].nome_ubs }}</td>
+          <td class="table-cell">{{ tableData[i - 1].nome_medico }}</td>
           <td class="table-cell">{{ tableData[i - 1].tipo }}</td>
           <td class="table-cell">{{ tableData[i - 1].data }}</td>
           <td class="table-cell">{{ tableData[i - 1].horario }}</td>
@@ -28,8 +29,8 @@
       </tbody>
     </table>
     <div class="group-btn">
-      <button @click="backPage(this.$store.state.currentPage)" v-show="this.$store.state.currentPage > 2 || !loadMore" class="schedule-btn">Voltar</button>
-      <button @click="decideTable()" v-show="loadMore" class="schedule-btn">Carregar mais</button>
+      <button @click="backPage(this.$store.state.currentPage)" class="schedule-btn">Voltar</button>
+      <button @click="decideTable()" v-show="loadMore && tableData.length === 10" class="schedule-btn">Carregar mais</button>
     </div>
   </div>
 </template>
@@ -40,7 +41,7 @@ export default {
   name: "TableComponent",
   data() {
     return {
-      tableHeader: ["Id", "Medico", "Tipo", "Dia", "Horario", ""],
+      tableHeader: ["Id","Ubs", "Medico", "Tipo", "Dia", "Horario", ""],
       buttonView: true,
     };
   },
@@ -61,9 +62,11 @@ export default {
           data: this.tableData[index].data,
           tipo: this.tableData[index].tipo,
           id_medico: this.tableData[index].id_medico,
+          id_ubs: this.tableData[index].id_ubs,
           id_paciente: localStorage.getItem("id"),
         });
         await this.$store.dispatch("loadTable");
+        this.$router.push('/');
       } catch (error) {
         console.log(error);
       }
@@ -98,6 +101,11 @@ export default {
       await this.$store.dispatch('loadTable')
     },
     backPage(current) {
+      if(this.$store.state.currentPage === 1) {
+        this.$router.push("/")
+        return
+      }
+      console.log(this.$store.state.currentPage)
       this.$store.commit('setPage', (current - 2))
       this.decideTable()
     }

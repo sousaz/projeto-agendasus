@@ -1,5 +1,5 @@
 <template>
-    <div class="user">
+    <div id="user">
         <HeaderComponent />
         <ContentComponent />
     </div>
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style>
-    .user {
+    #user {
         height: 100vh;
         display: grid;
         grid-template-rows: 115px 1fr;

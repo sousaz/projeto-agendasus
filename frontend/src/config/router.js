@@ -5,7 +5,10 @@ import LoginPage from '@/pages/LoginPage'
 import RegisterPage from '@/pages/RegisterPage'
 import UserPage from '@/pages/UserPage'
 import SchedulePage from '@/pages/SchedulePage'
+import UbsPage from '@/pages/UbsPage'
 // import TableComponent from '@/components/TableComponent'
+import RegisterDoctorComponent from '@/components/RegisterDoctorComponent'
+import RegisterQueriesComponent from '@/components/RegisterQueriesComponent'
 import store from './store'
 
 // import axios from 'axios'
@@ -51,11 +54,33 @@ const routes = [
                 path: '/paciente/minhasconsultas',
                 components: {
                     userContent: SchedulePage
-                }
+                },
             },
 
         ]
     },
+    {
+        name: "UbsScreen",
+        path: '/ubs',
+        component: UbsPage,
+        meta: {requiresAuth: true},
+        children: [
+            {
+                name: "RegisterDoctorContent",
+                path: '',
+                components: {
+                    userContent: RegisterDoctorComponent
+                }
+            },
+            {
+                name: "RegisterQueryContent",
+                path: '/ubs/consulta',
+                components: {
+                    userContent: RegisterQueriesComponent
+                }
+            },
+        ]
+    }
 ];
 
 const router = createRouter({
@@ -72,7 +97,8 @@ router.beforeEach(async (to, from, next) => {
     if (!token) {
       next('/login');
     } else {
-      next(); 
+      next();
+      store.commit('setTableData', {})
     }
   } else {
     next();

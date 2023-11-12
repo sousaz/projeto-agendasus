@@ -28,9 +28,9 @@ export default {
   data() {
     return{
       cards: [
-        { url: "/assets/imgs/iconAgendar.svg", text: "Cadastre-se", to: "/", show: true},
-        { url: "/assets/imgs/iconConsultar.svg", text: "Agende sua consulta", to: "/"},
-        { url: "/assets/imgs/notebook-svgrepo-com.svg", text: "Minhas consultas", to: "/saibaMais", show: false},
+        { url: "/assets/imgs/iconAgendar.svg", text: "Cadastre-se", to: "/cadastrar", show: true},
+        { url: "/assets/imgs/iconConsultar.svg", text: "Agende sua consulta", to: "/paciente"},
+        { url: "/assets/imgs/notebook-svgrepo-com.svg", text: "Minhas consultas", to: "/paciente/minhasconsultas", show: false},
         { url: "/assets/imgs/iconSaiba.svg", text: "Saiba Mais", to: "/saibaMais"},
       ],
     }

@@ -59,8 +59,9 @@ export default new Vuex.Store({
       }
     },
     async loadTable(context) {
-      // const url = `http://localhost:3333/api/auth/consulta/${context.state.currentPage}/${context.state.selectedUbs}/${context.state.selectedQuery}`
-      const url = `http://localhost:3333/api/teste/${context.state.currentPage}`
+      console.log(context.state.currentPage);
+      const url = `http://localhost:3333/api/auth/consulta/${context.state.currentPage}/${context.state.selectedUbs}/${context.state.selectedQuery}`
+      // const url = `http://localhost:3333/api/teste/${context.state.currentPage}`
       try {
         const response = await axios.get(url)
         if(response.data.length !== 0) {
