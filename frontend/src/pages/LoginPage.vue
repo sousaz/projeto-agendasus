@@ -85,7 +85,7 @@ export default {
             localStorage.setItem("id", id);
             toast.success('Logado com sucesso!', {
                 autoClose: 2000,
-                position: 'top-center',
+                position: 'top-right',
             })
             this.$store.commit('login')
             setTimeout(() => {

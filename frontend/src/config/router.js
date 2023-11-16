@@ -9,6 +9,7 @@ import UbsPage from '@/pages/UbsPage'
 // import TableComponent from '@/components/TableComponent'
 import RegisterDoctorComponent from '@/components/RegisterDoctorComponent'
 import RegisterQueriesComponent from '@/components/RegisterQueriesComponent'
+import UbsTableComponent from '@/components/UbsTableComponent'
 import store from './store'
 
 // import axios from 'axios'
@@ -79,6 +80,13 @@ const routes = [
                     userContent: RegisterQueriesComponent
                 }
             },
+            {
+                name: "UbsTableContent",
+                path: '/ubs/consultas',
+                components: {
+                    userContent: UbsTableComponent
+                }
+            },
         ]
     }
 ];
@@ -89,21 +97,22 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  await store.dispatch('initializeApp');
-
-  const token = localStorage.getItem('token');
-
-  if (to.meta.requiresAuth && !store.state.isAuthenticated) {
-    if (!token) {
-      next('/login');
+    await store.dispatch('initializeApp');
+  
+    console.log(store.state.isLogged);
+  
+    if (to.meta.requiresAuth) {
+      if (!store.state.isLogged) {
+        next('/login');
+      } else {
+        next();
+        store.commit('setTableData', {});
+      }
     } else {
       next();
-      store.commit('setTableData', {})
     }
-  } else {
-    next();
-  }
-});
+  });
+  
 
 
 export default router;

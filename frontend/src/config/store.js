@@ -48,8 +48,10 @@ export default new Vuex.Store({
           const response = await axios.post(url, { token });
 
           if (response.data.validate === true) {
+            console.log("dadas");
             commit('login');
           } else {
+            console.log("21312312");
             commit('logout');
           }
         } catch (error) {
@@ -59,13 +61,11 @@ export default new Vuex.Store({
       }
     },
     async loadTable(context) {
-      console.log(context.state.currentPage);
       const url = `http://localhost:3333/api/auth/consulta/${context.state.currentPage}/${context.state.selectedUbs}/${context.state.selectedQuery}`
-      // const url = `http://localhost:3333/api/teste/${context.state.currentPage}`
       try {
         const response = await axios.get(url)
-        if(response.data.length !== 0) {
-          context.commit('setPage', context.state.currentPage + 1)
+        console.log(response.data);
+        if(response.data.length) {
           context.commit('setTableData', response.data)
           context.commit('setLoadMore', true)
         }else {

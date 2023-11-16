@@ -98,7 +98,7 @@ h2{
 }
 
 .logout {
-  background-color: rgb(223, 111, 111);
+  background-color: #df6f6f;
   color: black;
   font-size: 1.2rem;
 }

@@ -4,34 +4,34 @@
     <form class="form-query">
       <div class="input-group">
         <div class="input-field">
-          <label for="type" class="label">Qual o tipo de consulta?</label>
+          <label for="type" class="label">Tipo de consulta</label>
           <input v-model="query.type" type="text" name="type" id="type" />
         </div>
         <div class="input-field">
-          <label for="date" class="label">Qual a data?</label>
+          <label for="date" class="label">Data</label>
           <input v-model="query.date" type="date" name="date" id="date" />
         </div>
         <div class="input-field">
           <label for="start" class="label"
-            >Quando começara o atendimento?</label
+            >Início do atendimento</label
           >
           <input v-model="query.start" type="time" name="start" id="start" />
         </div>
         <div class="input-field">
-          <label for="end" class="label">Quando começara o atendimento?</label>
+          <label for="end" class="label">Término do atendimento</label>
           <input v-model="query.end" type="time" name="end" id="end" />
         </div>
         <div class="input-field">
           <label for="range" class="label"
-            >Quanto tempo durará cada consulta em minutos?</label
+            >Tempo médio da consulta</label
           >
           <input v-model="query.range" type="number" name="range" id="range" />
         </div>
       </div>
       <div class="select-group">
-        <label class="label" for="doctor">Qual o doutor?</label>
-        <select v-model="query.doctor" name="doctor" id="doctor" class="select">
-          <option class="option" disabled selected value="">Selecione o médico</option>
+        <label class="label" for="doctor">Médico</label>
+        <select name="doctor" id="doctor" class="select" v-model="query.doctor">
+          <option value="" selected disabled>Selecione o médico</option>
           <option class="option" v-for="(option, i) in doctorOptions" :key="i" :value="option">{{option.nome}}</option>
         </select>
       </div>
@@ -53,7 +53,7 @@ export default {
         start: "",
         end: "",
         range: Number,
-        doctor: {},
+        doctor: "",
       }
     };
   },

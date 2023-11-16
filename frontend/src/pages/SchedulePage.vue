@@ -1,13 +1,13 @@
 <template>
     <div id="schedule">
         <div v-show="!tableView" class="form-select">
-            <label class="options-label" for="ubs">Em qual UBS deseja marcar a consulta?</label>
+            <label class="options-label" for="ubs">UBS</label>
             <select name="ubs" id="ubs" class="select" v-model="selectedUbs">
                 <option value="" disabled selected>Selecione uma UBS</option>
                 <option class="option" v-for="(option, i) in optionsUbs" :key="i" :value="option._id">{{ option.nome }}</option>
             </select>
 
-            <label for="ubs">Que tipo de consulta seria?</label>
+            <label class="options-label" for="ubs">Tipo de consulta</label>
             <select name="ubs" id="ubs" class="select" v-model="selectedQuery">
                 <option value="" disabled selected>Selecione o tipo de consulta</option>
                 <option class="option" v-for="(option, i) in optionsQuery" :key="i" :value="option">{{ option }}</option>
@@ -102,6 +102,7 @@ export default {
   display: block;
   margin-bottom: 10px;
   color: #3a58f0;
+  font-weight: bold;
 }
 
 .select {
@@ -123,12 +124,18 @@ export default {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-weight: bold;
+  font-family: 'coves';
+  font-size: 1.1rem;
 }
 
+
 .schedule-btn:hover {
-  background-color: #dce2fa;
-  color: #3a58f0;
+  transform: scale(1.1);
+}
+
+.schedule-btn:active {
+  transition: 0.05s;
+  transform: scale(0.99);
 }
 
 </style>

@@ -24,13 +24,16 @@
             <button v-show="buttonView" class="check" @click="makeSchedule(i - 1)">
               Selecionar<fa class="calendar-check" icon="calendar-check" />
             </button>
+            <button v-show="this.$route.path === '/paciente/minhasconsultas'" class="cancel" @click="cancelSchedule(i - 1)">
+              Cancelar<fa class="xmark-cancel" icon="xmark-circle" />
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
     <div class="group-btn">
-      <button @click="backPage(this.$store.state.currentPage)" class="schedule-btn">Voltar</button>
-      <button @click="decideTable()" v-show="loadMore && tableData.length === 10" class="schedule-btn">Carregar mais</button>
+      <button @click="backPage()" class="schedule-btn">Voltar</button>
+      <button @click="nextPage()" v-show="loadMore && tableData.length === 10" class="schedule-btn">Carregar mais</button>
     </div>
   </div>
 </template>
@@ -41,8 +44,9 @@ export default {
   name: "TableComponent",
   data() {
     return {
-      tableHeader: ["Id","Ubs", "Medico", "Tipo", "Dia", "Horario", ""],
+      tableHeader: ["","UBS", "Médico", "Tipo", "Dia", "Horário", ""],
       buttonView: true,
+      currentPage: 1,
     };
   },
   computed: {
@@ -71,6 +75,23 @@ export default {
         console.log(error);
       }
     },
+    async cancelSchedule(index) {
+      const url = `http://localhost:3333/api/cancel/${this.tableData[index]._id}`;
+      try {
+        await axios.put(url, {
+          horario: this.tableData[index].horario,
+          data: this.tableData[index].data,
+          tipo: this.tableData[index].tipo,
+          id_medico: this.tableData[index].id_medico,
+          id_ubs: this.tableData[index].id_ubs,
+          id_paciente: localStorage.getItem("id"),
+        });
+        await this.$store.dispatch("loadTable");
+        this.$router.push('/');
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async loadMyTable() {
       if(this.$route.path === '/paciente/minhasconsultas'){
         try {
@@ -78,10 +99,7 @@ export default {
           const id = localStorage.getItem("id");
           const url = `http://localhost:3333/api/consulta/${id}/${this.$store.state.currentPage}`;
           const response = await axios.get(url)
-          console.log(this.$store.state.currentPage)
-          console.log(response.data)
-          if(response.data.length !== 0) {
-            this.$store.commit('setPage', this.$store.state.currentPage + 1)
+          if(response.data.length) {
             this.$store.commit('setTableData', response.data)
             this.$store.commit('setLoadMore', true)
           }else {
@@ -97,18 +115,23 @@ export default {
         this.loadMyTable()
         return
       }
-      
+
       await this.$store.dispatch('loadTable')
     },
-    backPage(current) {
-      if(this.$store.state.currentPage === 1) {
+    backPage() {
+      this.currentPage--
+      this.$store.commit('setPage', (this.currentPage))
+      if(this.currentPage < 1) {
         this.$router.push("/")
         return
       }
-      console.log(this.$store.state.currentPage)
-      this.$store.commit('setPage', (current - 2))
       this.decideTable()
-    }
+    },
+    nextPage() {
+      this.currentPage++
+      this.$store.commit('setPage', (this.currentPage))
+      this.decideTable()
+    },
   },
   mounted() {
     this.loadMyTable()
@@ -147,6 +170,7 @@ export default {
 .table-row {
   border-bottom: 1px solid #dce2fa;
   text-align: center;
+  font-size: 1.1rem;
 }
 
 .table-header-content {
@@ -163,14 +187,37 @@ export default {
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  font-family: 'coves';
+  font-size: 1.1rem;
 }
 
 .check:hover {
-  background-color: #fff;
+  background-color: #dce2fa;
   color: #3a58f0;
 }
 
 .calendar-check {
   margin-left: 5px;
+}
+
+.xmark-cancel {
+  margin-left: 5px;
+}
+
+.cancel {
+  display: flex;
+  align-items: center;
+  background-color: #df6f6f;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-family: 'coves';
+  font-size: 1.1rem;
+}
+
+.cancel:hover {
+  background-color: #dce2fa;
+  color: #df6f6f;
 }
 </style>

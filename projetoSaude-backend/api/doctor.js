@@ -19,6 +19,8 @@ module.exports = {
         if(doutorExiste)
             return res.status(422).json({ msg: "Médico já cadastrado!" })
 
+
+        // verificar se a especialidade é a especialidade do medico
         const medico = new Medico({
             cpf, nome, crm, especialidade
         })

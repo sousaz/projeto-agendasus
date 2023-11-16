@@ -10,15 +10,13 @@ const queries = require("../api/queries")
 
 
 
-router.route('/teste/:id').get(schedule.teste)
+router.route('/consultas/:page').get(schedule.loadAllSchedules)
 
 router.route("/auth/register").post(auth.registerUser)
 router.route("/auth/login").post(auth.loginUser)
 
-router.route("/consulta").get(schedule.teste)
 router.route("/auth/consulta/:page/:ubs/:tipo").get(schedule.loadSchedule)
 router.route("/consulta/:id").put(schedule.makeSchedule)
-    .get(schedule.loadUserSchedule)
 
 router.route("/auth/validateToken").post(auth.validateToken)
 
@@ -29,6 +27,12 @@ router.route("/doctor").post(doctor.createDoctor)
 router.route("/ubs").post(ubs.createUbs)
 
 router.route("/query").post(queries.createQuery)
+
+router.route("/consulta/:id/:page").get(schedule.loadUserSchedule)
+
+router.route("/cancel/:id").put(schedule.cancelSchedule)
+
+router.route("/delete/:id").delete(schedule.deleteSchedule)
 
 
 module.exports = router

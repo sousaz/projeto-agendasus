@@ -1,7 +1,9 @@
 <template>
   <div id="doctorForm">
-    <h1 class="title">Cadastre o médico</h1>
     <form class="form-doctor">
+      <div class="form-header">
+        <h1 class="title">Cadastre o médico</h1>
+      </div>
       <div class="input-group">
         <div class="input-field">
           <input
@@ -20,7 +22,7 @@
             v-mask="'###.###.###-##'"
             type="text"
             name="cpf"
-            placeholder="Digite o cpf do médico"
+            placeholder="Digite o CPF do médico"
             id="cpf"
           />
         </div>
@@ -31,7 +33,7 @@
             class="inputs"
             type="text"
             name="crm"
-            placeholder="Digite o crm do médico"
+            placeholder="Digite o CRM do médico"
             id="crm"
           />
         </div>
@@ -97,25 +99,43 @@ export default {
 }
 
 .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #3a58f0;
+  background-color: #fff;
+  width: 100%;
+  height: 97px;
+  border-radius: 10px 10px 20px 0; 
+  text-align: center;
 }
 
 .form-doctor {
-  max-width: 400px;
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #3a58f0;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 310px;
+  height: 400px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.212);
 }
 
 .input-group {
+  background-color: #3a58f0;
   display: flex;
+  padding: 20px;
   flex-direction: column;
+  border-radius: 20px 0 10px 10px;
 }
 
 .input-field {
-  margin-bottom: 20px;
+  margin: 10px 20px;
+}
+
+.form-header{
+  width: 100%;
+  height: 97px;
+  color: #3a58f0;
+  background-color: #3a58f0;
+  border-radius: 12px 12px 0 0;
 }
 
 .inputs {
@@ -123,26 +143,27 @@ export default {
   padding: 10px;
   box-sizing: border-box;
   border: 1px solid #dadff5;
-  border-radius: 4px;
+  border-radius: 10px;
   background-color: #fff;
   color: #3a58f0;
 }
 
 .register-btn {
-  width: 100%;
+  width: calc(100% - 38px);
   padding: 10px;
   font-size: 1.2rem;
+  font-weight: bold;
   box-sizing: border-box;
   border: none;
   border-radius: 4px;
   background-color: #fff;
   color: #3a58f0;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+  font-family: 'coves';
+  margin: 10px 20px;
 }
 
 .register-btn:hover {
-  background-color: #3a58f0;
-  color: #fff;
+  transform: scale(1.1);
 }
 </style>

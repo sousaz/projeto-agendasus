@@ -3,7 +3,7 @@
     <HeaderComponent />
     <SubtitleComponent
       label1="Faça seu agendamento online com comodidade,"
-      label2="em qualquer hora e lugar"
+      label2="em qualquer hora e lugar."
     />
     <section class="section2">
       <div v-for="(card, i) in cards" :key="i" class="card" v-show="card.show !== this.isLogged">

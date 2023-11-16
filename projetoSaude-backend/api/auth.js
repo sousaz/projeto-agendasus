@@ -159,10 +159,10 @@ module.exports = {
         const secret = process.env.SECRET
         
         await jwt.verify(token, secret)
-
-            res.status(200).json({ msg: 'Acesso liberado!!', validate: true})
+        
+        res.status(200).json({ msg: 'Acesso liberado!!', validate: true })
         } catch (error) {
-            res.status(400).json({ msg: 'Token invalido!!' })
+            res.status(401).json({ msg: 'Token invalido!!', validate: false })
         }
     }
 }

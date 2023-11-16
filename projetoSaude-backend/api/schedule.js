@@ -66,6 +66,46 @@ module.exports = {
             res.status(400).json({ msg: 'Erro ao atualizar na tabela consulta' })
         }
     }, 
+    async cancelSchedule(req, res) {
+        const { horario, data, tipo, id_medico, id_ubs, id_paciente } = req.body
+        const id = req.params.id
+
+        if(!horario)
+            return res.status(422).json({ msg: "O horario é obrigatório!" })
+        if(!data)
+            return res.status(422).json({ msg: "A data é obrigatório!" })
+        if(!tipo)
+            return res.status(422).json({ msg: "O tipo de consulta é obrigatório!" })
+        if(!id_medico)
+            return res.status(422).json({ msg: "O médico é obrigatório!" })
+        if(!id_paciente)
+            return res.status(422).json({ msg: "O paciente é obrigatório!" })
+        if(!id_ubs)
+            return res.status(422).json({ msg: "A ubs é obrigatório!" })
+
+        const consultaExiste = await Consulta.findById(id)
+
+        if(!consultaExiste)
+            return res.status(422).json({ msg: "Consulta não disponivel!" })
+
+        const mesmoPaciente = consultaExiste.id_paciente === id_paciente
+
+        if(!mesmoPaciente)
+            return res.status(422).json({ msg: "Não vai rolar!" })
+
+        try {
+            consultaExiste.horario = horario
+            consultaExiste.data = data
+            consultaExiste.tipo = tipo
+            consultaExiste.id_medico = id_medico
+            consultaExiste.id_paciente = null
+
+            await consultaExiste.save()
+            res.status(200).json({ msg: "Consulta cancelada com sucesso!" })
+        } catch (error) {
+            res.status(400).json({ msg: 'Erro ao atualizar na tabela consulta' })
+        }
+    }, 
 
     //carregar as consultas marcadas pelo paciente
     async loadUserSchedule(req, res) {
@@ -88,24 +128,40 @@ module.exports = {
             res.status(400).json({ msg: 'Erro na consulta'})
         }
     },
-    async teste(req, res) {
-        const id = req.params.id
+    async loadAllSchedules(req, res) {
+        const page = req.params.page
         try {
-            const consulta = await Consulta.find().skip(id * limit - limit).limit(limit)
+            const consulta = await Consulta.find().skip(page * limit - limit).limit(limit)
             const consultasComInfoAdicional = await Promise.all(consulta.map(async (consulta) => {
                 const medico = await Medico.findById(consulta.id_medico);
                 const ubs = await Ubs.findById(consulta.id_ubs);
+                const paciente = await Paciente.findById(consulta.id_paciente)
     
                 return {
                     ...consulta.toObject(),
                     nome_medico: medico ? medico.nome : null,
                     nome_ubs: ubs ? ubs.nome : null,
+                    nome_paciente: paciente ? `${paciente.nome} ${paciente.sobrenome}` : null,
                 };
             }));
             res.status(200).json(consultasComInfoAdicional)
         } catch (error) {
             console.log(error)
             res.status(400).json({ msg: error})
+        }
+    },
+    async deleteSchedule(req, res) {
+        try {
+            const id = req.params.id
+
+            const consulta = await Consulta.deleteOne({ _id: id })
+            if(!consulta) {
+                return res.status(400).json("Consulta não encontrada")
+            }
+
+            res.status(201).json("consulta apagada")
+        } catch (error) {
+            res.status(400).json({ error: 'Consulta não encontrada'})
         }
     }
 }

@@ -4,11 +4,11 @@ import router from './config/router'
 import VueTheMask from 'vue-the-mask'
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
-import { faPhone, faCalendarCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarCheck, faXmarkCircle } from '@fortawesome/free-solid-svg-icons'
 import './config/axios'
 import store from './config/store'
 
-library.add(faCalendarCheck, faPhone)
+library.add(faCalendarCheck, faXmarkCircle)
 
 createApp(App)
     .component("fa", FontAwesomeIcon)
