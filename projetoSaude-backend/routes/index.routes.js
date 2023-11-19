@@ -29,7 +29,7 @@ router.route("/ubs").post( ubs.createUbs)
 
 router.route("/query").post( queries.createQuery)
 
-router.route("/consulta/:id/:page").get(auth.checkToken, schedule.loadUserSchedule)
+router.route("/consulta/:id/:page").get( schedule.loadUserSchedule)
 
 router.route("/cancel/:id").put(auth.checkToken, schedule.cancelSchedule)
 

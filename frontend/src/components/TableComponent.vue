@@ -14,11 +14,11 @@
       </thead>
       <tbody class="table-body">
         <tr v-for="i in tableData.length" :key="i" class="table-row">
-          <td class="table-cell">{{ i + (10 * (currentPage - 1)) }}</td>
+          <td class="table-cell">{{ i + (5 * (currentPage - 1)) }}</td>
           <td class="table-cell">{{ tableData[i - 1].nome_ubs }}</td>
           <td class="table-cell">{{ tableData[i - 1].nome_medico }}</td>
           <td class="table-cell">{{ tableData[i - 1].tipo }}</td>
-          <td class="table-cell">{{ tableData[i - 1].data }}</td>
+          <td class="table-cell">{{ tableData[i - 1].dia }}</td>
           <td class="table-cell">{{ tableData[i - 1].horario }}</td>
           <td class="table-cell">
             <button v-show="buttonView" class="check" @click="makeSchedule(i - 1)">
@@ -33,7 +33,7 @@
     </table>
     <div class="group-btn">
       <button @click="backPage()" class="schedule-btn">Voltar</button>
-      <button @click="nextPage()" v-show="tableData.length === 10" class="schedule-btn">Carregar mais</button>
+      <button @click="nextPage()" v-show="tableData.length === 5" class="schedule-btn">Carregar mais</button>
     </div>
   </div>
 </template>
@@ -109,7 +109,7 @@ export default {
         try {
           this.buttonView = false
           const id = localStorage.getItem("id");
-          const url = `http://localhost:3333/api/consulta/${id}/${this.$store.state.currentPage}`;
+          const url = `http://localhost:3333/api/consulta/${id}/${this.currentPage}`;
           const response = await axios.get(url)
           if(response.data.length) {
             this.$store.commit('setTableData', response.data)
@@ -150,6 +150,7 @@ export default {
   },
   mounted() {
     this.loadMyTable()
+    this.$store.commit('setPage', (this.currentPage))
   }
 };
 </script>

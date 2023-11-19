@@ -2,28 +2,15 @@ const Paciente = require('../model/Paciente')
 const Medico = require('../model/Medico')
 const Consulta = require('../model/Consulta')
 const Ubs = require('../model/Ubs')
-const limit = 10
+const limit = 5
 
-function dateNow() {
-    const date = new Date();
-
-    const optionsDate = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    const optionsHour = { hour: '2-digit', minute: '2-digit' };
-    const dateLocal = date.toLocaleDateString(undefined, optionsDate);
-    const hourLocal = date.toLocaleTimeString(undefined, optionsHour);
-    const dateLocalFormated = dateLocal.replaceAll("/", "-")
-
-    return {dateLocalFormated, hourLocal} 
-    
-}
 
 module.exports = {
     // carrega as consultas não marcadas
     async loadSchedule(req, res) {
         const { page, ubs, tipo } = req.params
-        console.log(dateNow());
         try {
-            const consulta = await Consulta.find({ id_paciente: null, id_ubs: ubs, tipo: tipo, data: { $gte: dateNow().dateLocalFormated } }).skip(page * limit - limit).limit(limit)
+            const consulta = await Consulta.find({ id_paciente: null, id_ubs: ubs, tipo: tipo }).skip(page * limit - limit).limit(limit).sort({data: 'asc'})
             const consultasComInfoAdicional = await Promise.all(consulta.map(async (consulta) => {
                 const medico = await Medico.findById(consulta.id_medico);
                 const ubs = await Ubs.findById(consulta.id_ubs);
@@ -31,6 +18,8 @@ module.exports = {
                     ...consulta.toObject(),
                     nome_medico: medico ? medico.nome : null,
                     nome_ubs: ubs ? ubs.nome : null,
+                    dia: consulta.data.toLocaleDateString().replaceAll("/", "-"),
+                    horario: `${consulta.data.toLocaleTimeString().split(":")[0]}:${consulta.data.toLocaleTimeString().split(":")[1]}`
                 };
             }))
             res.status(200).json(consultasComInfoAdicional)
@@ -150,7 +139,7 @@ module.exports = {
         const id = req.params.id
         const page = req.params.page
         try {
-            const consulta = await Consulta.find({ id_paciente: id, data: { $gte: dateNow().dateLocalFormated } }).skip(page * limit - limit).limit(limit)
+            const consulta = await Consulta.find({ id_paciente: id }).skip(page * limit - limit).limit(limit).sort({data: 'asc'})
             const consultasComInfoAdicional = await Promise.all(consulta.map(async (consulta) => {
                 const medico = await Medico.findById(consulta.id_medico);
                 const ubs = await Ubs.findById(consulta.id_ubs);
@@ -159,6 +148,8 @@ module.exports = {
                     ...consulta.toObject(),
                     nome_medico: medico ? medico.nome : null,
                     nome_ubs: ubs ? ubs.nome : null,
+                    dia: consulta.data.toLocaleDateString().replaceAll("/", "-"),
+                    horario: `${consulta.data.toLocaleTimeString().split(":")[0]}:${consulta.data.toLocaleTimeString().split(":")[1]}`
                 };
             }));
             res.status(200).json(consultasComInfoAdicional)
@@ -169,7 +160,7 @@ module.exports = {
     async loadAllSchedules(req, res) {
         const page = req.params.page
         try {
-            const consulta = await Consulta.find().skip(page * limit - limit).limit(limit).sort({data: 'asc', horario: 'desc'})
+            const consulta = await Consulta.find().skip(page * limit - limit).limit(limit).sort({data: 'asc'})
             const consultasComInfoAdicional = await Promise.all(consulta.map(async (consulta) => {
                 const medico = await Medico.findById(consulta.id_medico);
                 const ubs = await Ubs.findById(consulta.id_ubs);

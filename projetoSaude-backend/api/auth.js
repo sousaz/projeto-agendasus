@@ -72,6 +72,8 @@ module.exports = {
         
         const salt = await bcrypt.genSalt(12)
         const passWordHash = await bcrypt.hash(senha, salt)
+        const reverseDate = data_nasc.split("-").reverse().join("-")
+        const insertDate = `${reverseDate}`
 
         const paciente = new Paciente({
             nome,
@@ -79,7 +81,7 @@ module.exports = {
             senha: passWordHash,
             sobrenome,
             cpf,
-            data_nasc: `${data_nasc.split("-").reverse().join("-")}T00:00:00.000+00:00`,
+            data_nasc: new Date(insertDate),
             numero_sus,
             id_endereco: endereco.id,
             admin: false

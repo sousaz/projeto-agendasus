@@ -14,7 +14,7 @@
       </thead>
       <tbody class="table-body">
         <tr v-for="(data, i) in tableData" :key="i" class="table-row" :style="{background: hasMarked(data)}">
-          <td class="table-cell">{{ i + (10 * (currentPage - 1)) + 1 }}</td>
+          <td class="table-cell">{{ i + (5 * (currentPage - 1)) + 1 }}</td>
           <td class="table-cell">{{ data.nome_ubs }}</td>
           <td class="table-cell">{{ data.nome_medico }}</td>
           <td class="table-cell">{{ data.tipo }}</td>
@@ -33,7 +33,7 @@
       <button v-show="currentPage > 1" @click="backPage()" class="schedule-btn">Voltar</button>
       <button
         @click="nextPage()"
-        v-show="tableData.length === 10"
+        v-show="tableData.length === 5"
         class="schedule-btn"
       >
         Carregar mais

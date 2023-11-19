@@ -85,13 +85,11 @@ module.exports = {
             }
     
             const consulta = new Consulta({
-                // data: `${data.split("-").reverse().join("-")}T${horario}:00.000+00:00`,
                 data: new Date(insertDate),
                 tipo: medicoExiste.especialidade,
                 id_medico,
                 id_ubs,
             });
-            console.log(consulta);
             
             consultasParaInserir.push(consulta);
         }
