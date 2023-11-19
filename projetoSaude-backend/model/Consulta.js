@@ -1,8 +1,7 @@
 const mongoose = require('mongoose')
 
 const Consulta = mongoose.model('Consulta', {
-    horario: String,
-    data: String,
+    data: Date,
     tipo: String,
     id_paciente: String,
     id_medico: String,

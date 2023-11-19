@@ -6,7 +6,7 @@ const Paciente = mongoose.model('Paciente', {
     cpf: String,
     nome: String,
     sobrenome:String,
-    data_nasc: String,
+    data_nasc: Date,
     numero_sus: String,
     id_endereco: String,
     admin: Boolean

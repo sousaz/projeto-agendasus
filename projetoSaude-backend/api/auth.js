@@ -79,7 +79,7 @@ module.exports = {
             senha: passWordHash,
             sobrenome,
             cpf,
-            data_nasc,
+            data_nasc: `${data_nasc.split("-").reverse().join("-")}T00:00:00.000+00:00`,
             numero_sus,
             id_endereco: endereco.id,
             admin: false

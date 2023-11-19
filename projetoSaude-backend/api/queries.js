@@ -59,12 +59,14 @@ module.exports = {
     
         for (const consultaInfo of consultas) {
             const { horario, data, id_medico, id_ubs } = consultaInfo;
+            const reverseDate = data.split("-").reverse().join("-")
+            const insertDate = `${reverseDate} ${horario} UTC-03:00`
     
             if (!horario || !data || !id_medico || !id_ubs) {
                 return res.status(422).json({ msg: "Todos os campos da consulta são obrigatórios!" });
             }
     
-            const consultaExiste = await Consulta.findOne({ horario, data, id_ubs, id_medico });
+            const consultaExiste = await Consulta.findOne({ data: new Date(insertDate), id_ubs, id_medico });
     
             if (consultaExiste) {
                 return res.status(422).json({ msg: "Choque de horario!" });
@@ -82,13 +84,14 @@ module.exports = {
                 return res.status(422).json({ msg: "UBS não cadastrada!" });
             }
     
-            const consulta = {
-                horario,
-                data,
+            const consulta = new Consulta({
+                // data: `${data.split("-").reverse().join("-")}T${horario}:00.000+00:00`,
+                data: new Date(insertDate),
                 tipo: medicoExiste.especialidade,
                 id_medico,
                 id_ubs,
-            };
+            });
+            console.log(consulta);
             
             consultasParaInserir.push(consulta);
         }
@@ -97,8 +100,61 @@ module.exports = {
             const result = await Consulta.insertMany(consultasParaInserir);
             res.status(200).json({ msg: "Consultas inseridas com sucesso", result });
         } catch (error) {
+            console.log(error);
             res.status(400).json({ msg: 'Erro ao adicionar consultas', error });
         }
     }
+    // async createQuery(req, res) {
+    //     const { consultas } = req.body;
+    
+    //     if (!consultas || !Array.isArray(consultas) || consultas.length === 0) {
+    //         return res.status(422).json({ msg: "Nenhuma consulta fornecida!" });
+    //     }
+    
+    //     const consultasParaInserir = [];
+    
+    //     for (const consultaInfo of consultas) {
+    //         const { horario, data, id_medico, id_ubs } = consultaInfo;
+    
+    //         if (!horario || !data || !id_medico || !id_ubs) {
+    //             return res.status(422).json({ msg: "Todos os campos da consulta são obrigatórios!" });
+    //         }
+    
+    //         const consultaExiste = await Consulta.findOne({ horario, data, id_ubs, id_medico });
+    
+    //         if (consultaExiste) {
+    //             return res.status(422).json({ msg: "Choque de horario!" });
+    //         }
+    
+    //         const medicoExiste = await Medico.findById(id_medico);
+    
+    //         if (!medicoExiste) {
+    //             return res.status(422).json({ msg: "Médico não cadastrado!" });
+    //         }
+    
+    //         const ubsExiste = await Ubs.findById(id_ubs);
+    
+    //         if (!ubsExiste) {
+    //             return res.status(422).json({ msg: "UBS não cadastrada!" });
+    //         }
+    
+    //         const consulta = {
+    //             horario,
+    //             data,
+    //             tipo: medicoExiste.especialidade,
+    //             id_medico,
+    //             id_ubs,
+    //         };
+            
+    //         consultasParaInserir.push(consulta);
+    //     }
+    
+    //     try {
+    //         const result = await Consulta.insertMany(consultasParaInserir);
+    //         res.status(200).json({ msg: "Consultas inseridas com sucesso", result });
+    //     } catch (error) {
+    //         res.status(400).json({ msg: 'Erro ao adicionar consultas', error });
+    //     }
+    // }
     
 }

@@ -18,7 +18,7 @@
           <td class="table-cell">{{ data.nome_ubs }}</td>
           <td class="table-cell">{{ data.nome_medico }}</td>
           <td class="table-cell">{{ data.tipo }}</td>
-          <td class="table-cell">{{ data.data }}</td>
+          <td class="table-cell">{{ data.dia }}</td>
           <td class="table-cell">{{ data.horario }}</td>
           <td class="table-cell">{{ data.nome_paciente }}</td>
           <td class="table-cell">

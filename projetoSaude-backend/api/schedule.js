@@ -169,7 +169,7 @@ module.exports = {
     async loadAllSchedules(req, res) {
         const page = req.params.page
         try {
-            const consulta = await Consulta.find().skip(page * limit - limit).limit(limit)
+            const consulta = await Consulta.find().skip(page * limit - limit).limit(limit).sort({data: 'asc', horario: 'desc'})
             const consultasComInfoAdicional = await Promise.all(consulta.map(async (consulta) => {
                 const medico = await Medico.findById(consulta.id_medico);
                 const ubs = await Ubs.findById(consulta.id_ubs);
@@ -180,10 +180,13 @@ module.exports = {
                     nome_medico: medico ? medico.nome : null,
                     nome_ubs: ubs ? ubs.nome : null,
                     nome_paciente: paciente ? `${paciente.nome} ${paciente.sobrenome}` : null,
+                    dia: consulta.data.toLocaleDateString().replaceAll("/", "-"),
+                    horario: `${consulta.data.toLocaleTimeString().split(":")[0]}:${consulta.data.toLocaleTimeString().split(":")[1]}`
                 };
             }));
             res.status(200).json(consultasComInfoAdicional)
         } catch (error) {
+            console.log(error)
             res.status(400).json({ msg: error})
         }
     },
@@ -196,7 +199,7 @@ module.exports = {
                 return res.status(400).json("Consulta não encontrada")
             }
 
-            res.status(201).json("consulta apagada")
+            res.status(201).json({ msg: "consulta apagada"})
         } catch (error) {
             res.status(400).json({ error: 'Consulta não encontrada'})
         }
