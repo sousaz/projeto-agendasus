@@ -6,13 +6,12 @@ import RegisterPage from '@/pages/RegisterPage'
 import UserPage from '@/pages/UserPage'
 import SchedulePage from '@/pages/SchedulePage'
 import UbsPage from '@/pages/UbsPage'
-// import TableComponent from '@/components/TableComponent'
 import RegisterDoctorComponent from '@/components/RegisterDoctorComponent'
 import RegisterQueriesComponent from '@/components/RegisterQueriesComponent'
 import UbsTableComponent from '@/components/UbsTableComponent'
 import store from './store'
 
-// import axios from 'axios'
+
 
 
 
@@ -64,7 +63,7 @@ const routes = [
         name: "UbsScreen",
         path: '/ubs',
         component: UbsPage,
-        meta: {requiresAuth: true},
+        meta: {requiresAdmin: true},
         children: [
             {
                 name: "RegisterDoctorContent",
@@ -99,8 +98,6 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     await store.dispatch('initializeApp');
   
-    console.log(store.state.isLogged);
-  
     if (to.meta.requiresAuth) {
       if (!store.state.isLogged) {
         next('/login');
@@ -108,8 +105,15 @@ router.beforeEach(async (to, from, next) => {
         next();
         store.commit('setTableData', {});
       }
+    } else if(to.meta.requiresAdmin) {
+        await store.dispatch('validateAdmin')
+        if (!store.state.isLogged) {
+            next('/login');
+        } else {
+            next();
+        }
     } else {
-      next();
+        next()
     }
   });
   

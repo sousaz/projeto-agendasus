@@ -4,27 +4,65 @@ const Consulta = require('../model/Consulta')
 const Ubs = require('../model/Ubs')
 const limit = 10
 
+function dateNow() {
+    const date = new Date();
+
+    const optionsDate = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const optionsHour = { hour: '2-digit', minute: '2-digit' };
+    const dateLocal = date.toLocaleDateString(undefined, optionsDate);
+    const hourLocal = date.toLocaleTimeString(undefined, optionsHour);
+    const dateLocalFormated = dateLocal.replaceAll("/", "-")
+
+    return {dateLocalFormated, hourLocal} 
+    
+}
+
 module.exports = {
-    //carrega as consultas não marcadas
+    // carrega as consultas não marcadas
     async loadSchedule(req, res) {
         const { page, ubs, tipo } = req.params
+        console.log(dateNow());
         try {
-            const consulta = await Consulta.find({ id_paciente: null, id_ubs: ubs, tipo: tipo }).skip(page * limit - limit).limit(limit)
+            const consulta = await Consulta.find({ id_paciente: null, id_ubs: ubs, tipo: tipo, data: { $gte: dateNow().dateLocalFormated } }).skip(page * limit - limit).limit(limit)
             const consultasComInfoAdicional = await Promise.all(consulta.map(async (consulta) => {
                 const medico = await Medico.findById(consulta.id_medico);
                 const ubs = await Ubs.findById(consulta.id_ubs);
-    
                 return {
                     ...consulta.toObject(),
                     nome_medico: medico ? medico.nome : null,
                     nome_ubs: ubs ? ubs.nome : null,
                 };
-            }));
+            }))
             res.status(200).json(consultasComInfoAdicional)
         } catch (error) {
+            console.log(error);
             res.status(400).json({ msg: 'Erro na consulta'})
         }
     },
+    // async loadSchedule(req, res) {
+    //     const { page, ubs, tipo } = req.params
+    //     console.log(dateNow());
+    //     try {
+    //         const consulta = await Consulta.find({ id_paciente: null, id_ubs: ubs, tipo: tipo, data: { $gte: dateNow().dateLocalFormated } }).skip(page * limit - limit).limit(limit)
+    //         const consultasComInfoAdicional = await Promise.all(consulta.map(async (consulta) => {
+    //             const medico = await Medico.findById(consulta.id_medico);
+    //             const ubs = await Ubs.findById(consulta.id_ubs);
+
+    //             console.log(new Date(consulta.data.split("-").reverse().join("-")) > new Date(dateNow().dateLocalFormated.split("-").reverse().join("-")));
+    //             if((new Date(consulta.data.split("-").reverse().join("-")) > new Date(dateNow().dateLocalFormated.split("-").reverse().join("-"))) || (consulta.horario > dateNow().hourLocal)){
+    //                 return {
+    //                     ...consulta.toObject(),
+    //                     nome_medico: medico ? medico.nome : null,
+    //                     nome_ubs: ubs ? ubs.nome : null,
+    //                 };
+    //             }
+    //         }))
+    //         res.status(200).json(consultasComInfoAdicional)
+    //     } catch (error) {
+    //         console.log(error);
+    //         res.status(400).json({ msg: 'Erro na consulta'})
+    //     }
+    // },
     //marca a consulta para um paciente
     async makeSchedule(req, res) {
         const { horario, data, tipo, id_medico, id_ubs, id_paciente } = req.body
@@ -112,7 +150,7 @@ module.exports = {
         const id = req.params.id
         const page = req.params.page
         try {
-            const consulta = await Consulta.find({ id_paciente: id }).skip(page * limit - limit).limit(limit)
+            const consulta = await Consulta.find({ id_paciente: id, data: { $gte: dateNow().dateLocalFormated } }).skip(page * limit - limit).limit(limit)
             const consultasComInfoAdicional = await Promise.all(consulta.map(async (consulta) => {
                 const medico = await Medico.findById(consulta.id_medico);
                 const ubs = await Ubs.findById(consulta.id_ubs);
@@ -146,7 +184,6 @@ module.exports = {
             }));
             res.status(200).json(consultasComInfoAdicional)
         } catch (error) {
-            console.log(error)
             res.status(400).json({ msg: error})
         }
     },
@@ -163,5 +200,6 @@ module.exports = {
         } catch (error) {
             res.status(400).json({ error: 'Consulta não encontrada'})
         }
-    }
+    },
+
 }

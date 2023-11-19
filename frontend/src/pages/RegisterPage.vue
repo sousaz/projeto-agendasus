@@ -296,7 +296,8 @@
 <script>
 import axios from "axios";
 import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
+import 'vue3-toastify/dist/index.css' 
+import { formatDate } from "@vueuse/core"
 export default {
   name: "CadastrarPage",
   data() {
@@ -340,7 +341,6 @@ export default {
   },
   methods: {
     nextForm() {
-      console.log();
       if (this.currentForm === 0 && this.form1Validation() === false) return;
       if (this.currentForm === 1 && this.form2Validation() === false) return;
       return this.currentForm < 2 ? this.currentForm++ : this.currentForm;
@@ -487,7 +487,10 @@ export default {
         this.user.city = response.data.localidade;
         this.user.state = response.data.uf;
       } catch (error) {
-        console.log(error);
+        toast.error("Cep não encontrado ou inválido!", {
+            autoClose: 5000,
+            position: 'top-right',
+        })
       }
     },
     async register() {
@@ -500,7 +503,7 @@ export default {
           cpf: this.user.cpf,
           nome: this.user.name,
           sobrenome: this.user.lastName,
-          data_nasc: this.user.birthday,
+          data_nasc: formatDate(this.parseDate(this.user.birthday), "D-MM-YYYY"),
           numero_sus: this.user.susNumber,
           cep: this.user.cep,
           rua: this.user.street,
@@ -511,17 +514,20 @@ export default {
           confirmarSenha: this.user.confirmPassword,
         })
         toast.success(response.data["msg"], {
-            autoClose: 2000,
-            position: 'top-center',
+            autoClose: 5000,
+            position: 'top-right',
         })
+        this.$router.push('/login');
       } catch (error) {
         toast.error(error.response.data["msg"], {
           autoClose: 5000,
-          position: 'top-center',
+          position: 'top-right',
         })
-        console.log(error);
-        return;
       }
+    },
+    parseDate(dateString) {
+      const [year, month, day] = dateString.split('-');
+      return new Date(year, month - 1, day);
     },
   },
 };

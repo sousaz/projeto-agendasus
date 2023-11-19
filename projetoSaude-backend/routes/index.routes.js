@@ -1,6 +1,5 @@
 const express = require("express")
 const router = express.Router()
-const paciente = require("../controller/paciente.controller")
 const auth = require("../api/auth")
 const schedule = require("../api/schedule")
 const options = require("../api/options")
@@ -10,29 +9,35 @@ const queries = require("../api/queries")
 
 
 
-router.route('/consultas/:page').get(schedule.loadAllSchedules)
+router.route('/consultas/:page').get(auth.checkAdmin, schedule.loadAllSchedules)
 
 router.route("/auth/register").post(auth.registerUser)
+
 router.route("/auth/login").post(auth.loginUser)
 
-router.route("/auth/consulta/:page/:ubs/:tipo").get(schedule.loadSchedule)
-router.route("/consulta/:id").put(schedule.makeSchedule)
+router.route("/auth/consulta/:page/:ubs/:tipo").get( schedule.loadSchedule)
+
+router.route("/consulta/:id").put(auth.checkToken, schedule.makeSchedule)
 
 router.route("/auth/validateToken").post(auth.validateToken)
 
-router.route("/options").get(options.loadOptions)
+router.route("/options").get(auth.checkToken, options.loadOptions)
 
-router.route("/doctor").post(doctor.createDoctor)
+router.route("/doctor").post(auth.checkAdmin, doctor.createDoctor)
 
-router.route("/ubs").post(ubs.createUbs)
+router.route("/ubs").post( ubs.createUbs)
 
-router.route("/query").post(queries.createQuery)
+router.route("/query").post(auth.checkAdmin, queries.createQuery)
 
-router.route("/consulta/:id/:page").get(schedule.loadUserSchedule)
+router.route("/consulta/:id/:page").get(auth.checkToken, schedule.loadUserSchedule)
 
-router.route("/cancel/:id").put(schedule.cancelSchedule)
+router.route("/cancel/:id").put(auth.checkToken, schedule.cancelSchedule)
 
-router.route("/delete/:id").delete(schedule.deleteSchedule)
+router.route("/delete/:id").delete(auth.checkAdmin, schedule.deleteSchedule)
+
+router.route("/auth/admin").post(auth.validateAdmin)
+
+// router.route("/teste").get(schedule.teste123)
 
 
 module.exports = router

@@ -14,7 +14,7 @@
       </thead>
       <tbody class="table-body">
         <tr v-for="(data, i) in tableData" :key="i" class="table-row" :style="{background: hasMarked(data)}">
-          <td class="table-cell">{{ i + 1 }}</td>
+          <td class="table-cell">{{ i + (10 * (currentPage - 1)) + 1 }}</td>
           <td class="table-cell">{{ data.nome_ubs }}</td>
           <td class="table-cell">{{ data.nome_medico }}</td>
           <td class="table-cell">{{ data.tipo }}</td>
@@ -44,6 +44,8 @@
 
 <script>
 import axios from 'axios';
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 export default {
   name: "UbsTableComponent",
   data() {
@@ -55,13 +57,16 @@ export default {
   },
   methods: {
     async loadData() {
-        try {
-            const url = `http://localhost:3333/api/consultas/${this.currentPage}`
-            const response = await axios.get(url)
-            this.tableData = response.data
-        } catch (error) {
-            console.log(error)
-        }
+      try {
+          const url = `http://localhost:3333/api/consultas/${this.currentPage}`
+          const response = await axios.get(url)
+          this.tableData = response.data
+      } catch (error) {
+          toast.error(error.response.data["msg"], {
+              autoClose: 5000,
+              position: 'top-right',
+          })
+      }
     },
     nextPage() {
         this.currentPage++
@@ -74,16 +79,23 @@ export default {
     async deleteSchedule(index) {
         try {
             const url = `http://localhost:3333/api/delete/${this.tableData[index]._id}`
-            await axios.delete(url)
+            const response = await axios.delete(url)
+            toast.success(response.data["msg"], {
+                autoClose: 5000,
+                position: 'top-right',
+            })
             this.loadData()
         } catch (error) {
-            console.log(error)
+            toast.error(error.response.data["msg"], {
+                autoClose: 5000,
+                position: 'top-right',
+            })
         }
     },
     hasMarked(data) {
-        if(data.nome_paciente)
-            return "#8a99e3"
-        return "#dce2fa"
+      if(data.nome_paciente)
+          return "#8a99e3"
+      return "#dce2fa"
     }
   },
   async mounted() {

@@ -81,16 +81,19 @@ export default {
         const id = response.data.id;
 
         if (token && id) {
-            localStorage.setItem("token", token);
-            localStorage.setItem("id", id);
-            toast.success('Logado com sucesso!', {
-                autoClose: 2000,
-                position: 'top-right',
-            })
-            this.$store.commit('login')
-            setTimeout(() => {
-                this.$router.push('/');
-            }, 2000);
+          localStorage.setItem("token", token);
+          localStorage.setItem("id", id);
+          toast.success('Logado com sucesso!', {
+              autoClose: 2000,
+              position: 'top-right',
+          })
+          this.$store.commit('login')
+          setTimeout(() => {
+              if(!response.data.admin) 
+                return this.$router.push('/');
+
+              this.$router.push('/ubs');
+          }, 2000);
         }
 
         } catch (error) {

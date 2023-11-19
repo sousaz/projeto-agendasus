@@ -76,11 +76,14 @@ export default {
             try {
                 const response = await axios.post(url, this.doctor)
                 toast.success(response.data["msg"], {
-                    autoClose: 2000,
-                    position: 'top-center',
+                    autoClose: 5000,
+                    position: 'top-right',
                 })
             } catch (error) {
-                console.log(error.response.data['msg'])
+                toast.error(error.response.data["msg"], {
+                    autoClose: 5000,
+                    position: 'top-right',
+                })
             }
         }
     }

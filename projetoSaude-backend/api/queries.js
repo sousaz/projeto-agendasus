@@ -58,13 +58,13 @@ module.exports = {
         const consultasParaInserir = [];
     
         for (const consultaInfo of consultas) {
-            const { horario, data, tipo, id_medico, id_ubs } = consultaInfo;
+            const { horario, data, id_medico, id_ubs } = consultaInfo;
     
-            if (!horario || !data || !id_medico || !tipo || !id_ubs) {
+            if (!horario || !data || !id_medico || !id_ubs) {
                 return res.status(422).json({ msg: "Todos os campos da consulta são obrigatórios!" });
             }
     
-            const consultaExiste = await Consulta.findOne({ horario, data, id_ubs });
+            const consultaExiste = await Consulta.findOne({ horario, data, id_ubs, id_medico });
     
             if (consultaExiste) {
                 return res.status(422).json({ msg: "Choque de horario!" });

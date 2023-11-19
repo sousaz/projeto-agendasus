@@ -19,11 +19,11 @@ module.exports = {
         if(!numero)
             return res.status(422).json({ msg: "O numero da casa é obrigatório!" })
         if(!usuario)
-            return res.status(422).json({ msg: "O usuario da casa é obrigatório!" })
+            return res.status(422).json({ msg: "O usuario é obrigatório!" })
         if(!senha)
-            return res.status(422).json({ msg: "A senha da casa é obrigatório!" })
+            return res.status(422).json({ msg: "A senha é obrigatório!" })
         if(!nome)
-            return res.status(422).json({ msg: "O nome da casa é obrigatório!" })
+            return res.status(422).json({ msg: "O nome é obrigatório!" })
 
         try {
             const ubsUsuarioExiste = await Ubs.findOne({ usuario })
@@ -46,7 +46,7 @@ module.exports = {
             const passWordHash = await bcrypt.hash(senha, salt)
 
             const ubs = new Ubs({
-                usuario, senha: passWordHash, nome, id_endereco: endereco.id
+                usuario, senha: passWordHash, nome, id_endereco: endereco.id, admin: true
             })
 
             await ubs.save()

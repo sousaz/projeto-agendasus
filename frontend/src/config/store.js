@@ -48,10 +48,28 @@ export default new Vuex.Store({
           const response = await axios.post(url, { token });
 
           if (response.data.validate === true) {
-            console.log("dadas");
             commit('login');
           } else {
-            console.log("21312312");
+            commit('logout');
+          }
+        } catch (error) {
+          console.error("Erro na validação do token:", error);
+          commit('logout');
+        }
+      }
+    },
+    async validateAdmin({ commit }) {
+      const token = localStorage.getItem('token');
+
+      if (token) {
+        const url = "http://localhost:3333/api/auth/admin";
+
+        try {
+          const response = await axios.post(url, { token });
+
+          if (response.data.validate === true) {
+            commit('login');
+          } else {
             commit('logout');
           }
         } catch (error) {
@@ -64,7 +82,6 @@ export default new Vuex.Store({
       const url = `http://localhost:3333/api/auth/consulta/${context.state.currentPage}/${context.state.selectedUbs}/${context.state.selectedQuery}`
       try {
         const response = await axios.get(url)
-        console.log(response.data);
         if(response.data.length) {
           context.commit('setTableData', response.data)
           context.commit('setLoadMore', true)

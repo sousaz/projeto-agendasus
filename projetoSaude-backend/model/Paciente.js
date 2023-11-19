@@ -8,7 +8,8 @@ const Paciente = mongoose.model('Paciente', {
     sobrenome:String,
     data_nasc: String,
     numero_sus: String,
-    id_endereco: String
+    id_endereco: String,
+    admin: Boolean
 })
 
 module.exports = Paciente

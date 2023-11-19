@@ -14,7 +14,7 @@
       </thead>
       <tbody class="table-body">
         <tr v-for="i in tableData.length" :key="i" class="table-row">
-          <td class="table-cell">{{ i }}</td>
+          <td class="table-cell">{{ i + (10 * (currentPage - 1)) }}</td>
           <td class="table-cell">{{ tableData[i - 1].nome_ubs }}</td>
           <td class="table-cell">{{ tableData[i - 1].nome_medico }}</td>
           <td class="table-cell">{{ tableData[i - 1].tipo }}</td>
@@ -33,13 +33,15 @@
     </table>
     <div class="group-btn">
       <button @click="backPage()" class="schedule-btn">Voltar</button>
-      <button @click="nextPage()" v-show="loadMore && tableData.length === 10" class="schedule-btn">Carregar mais</button>
+      <button @click="nextPage()" v-show="tableData.length === 10" class="schedule-btn">Carregar mais</button>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 export default {
   name: "TableComponent",
   data() {
@@ -72,13 +74,16 @@ export default {
         await this.$store.dispatch("loadTable");
         this.$router.push('/');
       } catch (error) {
-        console.log(error);
+        toast.error(error.response.data["msg"], {
+            autoClose: 5000,
+            position: 'top-right',
+        })
       }
     },
     async cancelSchedule(index) {
       const url = `http://localhost:3333/api/cancel/${this.tableData[index]._id}`;
       try {
-        await axios.put(url, {
+        const response = await axios.put(url, {
           horario: this.tableData[index].horario,
           data: this.tableData[index].data,
           tipo: this.tableData[index].tipo,
@@ -88,8 +93,15 @@ export default {
         });
         await this.$store.dispatch("loadTable");
         this.$router.push('/');
+        toast.success(response.data["msg"], {
+            autoClose: 5000,
+            position: 'top-right',
+        })
       } catch (error) {
-        console.log(error);
+        toast.error(error.response.data["msg"], {
+            autoClose: 5000,
+            position: 'top-right',
+        })
       }
     },
     async loadMyTable() {
@@ -106,7 +118,10 @@ export default {
             this.$store.commit('setLoadMore', false)
           }
         } catch (error) {
-          console.log(error);
+          toast.error(error.response.data["msg"], {
+            autoClose: 5000,
+            position: 'top-right',
+        })
         }
       }
     },

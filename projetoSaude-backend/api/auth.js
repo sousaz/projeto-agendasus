@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const Paciente = require("../model/Paciente")
 const Endereco = require("../model/Endereco")
+const Ubs = require("../model/Ubs")
 require("dotenv").config()
 
 
@@ -80,7 +81,8 @@ module.exports = {
             cpf,
             data_nasc,
             numero_sus,
-            id_endereco: endereco.id
+            id_endereco: endereco.id,
+            admin: false
         })
 
         try {
@@ -102,29 +104,30 @@ module.exports = {
         }
 
         const paciente = await Paciente.findOne({email})
+        const ubs = await Ubs.findOne({ usuario: email })
 
-        if(!paciente)
+        const user = paciente ? paciente : ubs
+
+        if(!user)
             return res.status(401).json({ msg: "Conta não encontrada!" })
 
-        const checarSenha = await bcrypt.compare(senha, paciente.senha)
+        const checarSenha = await bcrypt.compare(senha, user.senha)
 
         if(!checarSenha)
-            return res.status(401).json({ msg: "Email/senha necessário!" })
+            return res.status(401).json({ msg: "Email/senha incorretos!" })
 
        try {
-            // se o ususario conter admin: true gera um secret se não gera outro
-            // exemplo const secret = user.adim ? process.env.SECRET : process.env.SECRET2222
-            // e dai cria mais um middleware para checar o token
+            
             const secret = process.env.SECRET
 
             const token = jwt.sign({
-                id: paciente.id,
-                roles: ['user']
+                id: user.id,
+                admin: user.admin
             },
             secret,
             )
 
-            res.status(200).json({ msg: "Autenticação realizada com sucesso!!",  token: token, id: paciente.id })
+            res.status(200).json({ msg: "Autenticação realizada com sucesso!!",  token: token, id: user.id, admin: user.admin })
        } catch (error) {
             res.status(400).json({ msg: 'Erro com o servidor, tente novamente mais tarde'})
        }
@@ -148,19 +151,59 @@ module.exports = {
         }
     },
 
+    async checkAdmin(req, res, next) {
+        const authHeader = req.headers['authorization']
+        const tokenExiste = authHeader
+        if(!tokenExiste) 
+            return res.status(401).json({ msg: 'Acesso negado!!' })
+
+        try {
+            const secret = process.env.SECRET
+
+            const token = await jwt.decode(tokenExiste, secret)
+
+            if (!token.admin)
+                return res.status(401).send({msg: "Acesso negado!", validate: false })
+
+            next()
+        } catch (error) {
+            res.status(401).json({ msg: 'Token invalido!!', validate: false })
+        }
+    },
+
     async validateToken(req, res) {
         const authHeader = req.headers['authorization']
         const token = authHeader
         
         if(!token) 
-        res.status(401).json({ msg: 'Acesso negado!!' })
+            return res.status(401).json({ msg: 'Acesso negado!!' })
     
-    try {
-        const secret = process.env.SECRET
+        try {
+            const secret = process.env.SECRET
         
-        await jwt.verify(token, secret)
+            await jwt.verify(token, secret)
         
-        res.status(200).json({ msg: 'Acesso liberado!!', validate: true })
+            res.status(200).json({ msg: 'Acesso liberado!!', validate: true })
+        } catch (error) {
+            res.status(401).json({ msg: 'Token invalido!!', validate: false })
+        }
+    },
+
+    async validateAdmin(req, res) {
+        const authHeader = req.headers['authorization']
+        const tokenExiste = authHeader
+        if(!tokenExiste) 
+            return res.status(401).json({ msg: 'Acesso negado!!' })
+
+        try {
+            const secret = process.env.SECRET
+
+            const token = await jwt.decode(tokenExiste, secret)
+
+            if (!token.admin)
+                return res.status(401).send({msg: "Acesso negado!", validate: false })
+
+            res.status(201).send({ msg: "Acesso liberado!", validate: true })
         } catch (error) {
             res.status(401).json({ msg: 'Token invalido!!', validate: false })
         }

@@ -23,6 +23,8 @@
 
 <script>
 import axios from 'axios'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 import TableComponent from '../components/TableComponent.vue';
 export default {
     name: "SchedulePage",
@@ -55,7 +57,10 @@ export default {
                 this.optionsUbs = response.data.nomeUbs
                 this.optionsQuery = response.data.tipoConsulta
             } catch (error) {
-                console.log(error)
+                toast.error(error.response.data["msg"], {
+                    autoClose: 5000,
+                    position: 'top-right',
+                })
             }
         },
         async loadTable() {
@@ -65,7 +70,10 @@ export default {
                 await this.$store.dispatch('loadTable')
                 this.tableView = true
             } catch (error) {
-                console.log(error)
+                toast.error(error.response.data["msg"], {
+                    autoClose: 5000,
+                    position: 'top-right',
+                })
             }
         },
     }, 
