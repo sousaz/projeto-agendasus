@@ -94,7 +94,6 @@ export default {
 #doctorForm {
   width: 100%;
   height: calc(100vh - 115px);
-  margin: 20px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -116,6 +115,7 @@ export default {
 }
 
 .form-doctor {
+  margin: 20px auto;  
   width: 310px;
   height: 400px;
   background-color: #fff;

@@ -346,6 +346,9 @@ export default {
       return this.currentForm < 2 ? this.currentForm++ : this.currentForm;
     },
     backForm() {
+      if(this.currentForm === 0) {
+        this.$router.push("/")
+      }
       return this.currentForm === 0 ? this.currentForm : this.currentForm--;
     },
     sendForm() {
@@ -623,7 +626,7 @@ label {
 
 .entrar-botao {
   font-family: "coves";
-  font-size: 15px;
+  font-size: 1.2rem;
 
   color: white;
   border: none;
@@ -714,7 +717,7 @@ input {
 .botao-voltar,
 .botao-continuar {
   font-family: "coves";
-  font-size: 15px;
+  font-size: 1.2rem;
 
   color: white;
   border: none;
@@ -749,5 +752,40 @@ span.validacao {
   color: red;
   padding-left: 10px;
   margin-top: 3px;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 80%;
+  }
+
+.botao-ok:hover,
+.botao-voltar:hover,
+.botao-continuar:hover {
+  transform: scale(1.0);
+}
+
+  .form-group {
+    max-height: 500px; /* Set a maximum height */
+    overflow-y: auto; /* Add vertical scrollbar if needed */
+    padding: 0 20px 15px 20px;
+    width: auto;
+  }
+
+  .box {
+    padding: 10px;
+  }
+
+  .div-botao-ok {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .botao-ok,
+  .botao-voltar,
+  .botao-continuar {
+    width: 100%;
+    margin-top: 10px;
+  }
 }
 </style>
