@@ -63,6 +63,8 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     padding-top: 40px;
+    flex-wrap: wrap;
+    row-gap: 30px;
 }
 
 .card-item{
@@ -76,7 +78,7 @@ export default {
     justify-content: space-around;
     align-items: center;
 
-    font-size: 20px;
+    font-size: 1.2rem;
     color: #fff;
     transition: 0.5s;
     overflow: hidden;

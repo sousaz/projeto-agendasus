@@ -96,6 +96,7 @@ export default {
 .form-select {
     display: flex;
     flex-direction: column;
+    width: 300px;
     gap: 10px;
 }
 
@@ -123,6 +124,7 @@ export default {
 
 .option {
   color: #3a58f0;
+  width: 100%;
 }
 
 .schedule-btn {

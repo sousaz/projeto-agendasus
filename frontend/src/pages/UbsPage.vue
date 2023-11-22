@@ -27,4 +27,11 @@ export default {
         "header header"
         "nav content";
 }
+
+
+@media (max-width: 886px) {
+    #ubsPage {
+        grid-template-columns: 1fr;
+    }
+}
 </style>

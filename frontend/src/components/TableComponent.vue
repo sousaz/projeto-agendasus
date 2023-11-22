@@ -63,7 +63,7 @@ export default {
     async makeSchedule(index) {
       const url = `http://localhost:3333/api/consulta/${this.tableData[index]._id}`;
       try {
-        await axios.put(url, {
+        const response = await axios.put(url, {
           horario: this.tableData[index].horario,
           data: this.tableData[index].data,
           tipo: this.tableData[index].tipo,
@@ -72,7 +72,14 @@ export default {
           id_paciente: localStorage.getItem("id"),
         });
         await this.$store.dispatch("loadTable");
-        this.$router.push('/');
+        toast.success(response.data["msg"], {
+            autoClose: 5000,
+            position: 'top-right',
+        })
+        
+        setTimeout(() => {
+          this.$router.push('/');
+        }, 2000);
       } catch (error) {
         toast.error(error.response.data["msg"], {
             autoClose: 5000,
@@ -91,12 +98,13 @@ export default {
           id_ubs: this.tableData[index].id_ubs,
           id_paciente: localStorage.getItem("id"),
         });
-        await this.$store.dispatch("loadTable");
-        this.$router.push('/');
         toast.success(response.data["msg"], {
             autoClose: 5000,
             position: 'top-right',
         })
+        setTimeout(() => {
+          this.$router.push('/');
+        }, 2000);
       } catch (error) {
         toast.error(error.response.data["msg"], {
             autoClose: 5000,
@@ -156,9 +164,18 @@ export default {
 </script>
 
 <style>
-#table {
+/* #table {
   width: 30%;
   margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} */
+
+#table {
+  width: 80%;
+  margin: 20px 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -235,5 +252,30 @@ export default {
 .cancel:hover {
   background-color: #dce2fa;
   color: #df6f6f;
+}
+
+
+@media (max-width: 600px) {
+  .table-header-content,
+  .table-cell {
+    padding: 5px;
+    font-size: 1rem;
+  }
+
+  .check,
+  .cancel {
+    padding: 5px 8px;
+    font-size: 1rem;
+  }
+
+  .table {
+    margin: 10px;
+  }
+
+}
+@media (min-width: 800px) {
+  #table {
+    width: 40%;
+  }
 }
 </style>

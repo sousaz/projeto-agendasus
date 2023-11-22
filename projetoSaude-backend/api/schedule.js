@@ -88,9 +88,9 @@ module.exports = {
             consultaExiste.id_paciente = id_paciente
 
             await consultaExiste.save()
-            res.status(200).json({ msg: "atualizado na tabela consulta com sucesso" })
+            res.status(200).json({ msg: "Consulta marcada com sucesso!" })
         } catch (error) {
-            res.status(400).json({ msg: 'Erro ao atualizar na tabela consulta' })
+            res.status(400).json({ msg: 'Erro ao marcar consulta!' })
         }
     }, 
     async cancelSchedule(req, res) {
@@ -130,7 +130,7 @@ module.exports = {
             await consultaExiste.save()
             res.status(200).json({ msg: "Consulta cancelada com sucesso!" })
         } catch (error) {
-            res.status(400).json({ msg: 'Erro ao atualizar na tabela consulta' })
+            res.status(400).json({ msg: 'Erro ao cancelar consulta' })
         }
     }, 
 
@@ -187,7 +187,7 @@ module.exports = {
 
             const consulta = await Consulta.deleteOne({ _id: id })
             if(!consulta) {
-                return res.status(400).json("Consulta não encontrada")
+                return res.status(400).json({ msg: "Consulta não encontrada" })
             }
 
             res.status(201).json({ msg: "consulta apagada"})

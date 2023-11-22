@@ -517,7 +517,9 @@ export default {
             autoClose: 5000,
             position: 'top-right',
         })
-        this.$router.push('/login');
+        setTimeout(() => {
+            this.$router.push('/login');
+        }, 2000);
       } catch (error) {
         toast.error(error.response.data["msg"], {
           autoClose: 5000,

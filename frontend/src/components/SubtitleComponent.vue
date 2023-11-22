@@ -45,4 +45,20 @@ h2 {
   color: #dce2fa;
 }
 
+@media (max-width: 769px) {
+  .section1 {
+    text-align: center;
+    padding: 20px;
+    max-height: 100%;
+  }
+}
+
+@media (max-width: 481px) {
+  .section1 {
+    text-align: center;
+    padding: 20px;
+    max-height: 100%;
+  }
+}
+
 </style>

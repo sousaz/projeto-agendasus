@@ -55,6 +55,8 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     padding: 30px 130px 30px 130px;
+    flex-wrap: wrap;
+    row-gap: 30px;
 }
 
 img{
@@ -73,7 +75,7 @@ img{
     justify-content: center;
     align-items: center;
 
-    font-size: 20px;
+    font-size: 1.2rem;
     color: #fff;
     transition: 0.5s;
 }
@@ -83,7 +85,7 @@ img{
     padding: 8px 22px;
     border-radius: 7px;
     background-color: #778cf8;
-    font-size: 20px;
+    font-size: 1.2rem;
     transition: 0.5s;
     color: white;
 }
@@ -100,4 +102,16 @@ img{
     transform: scale(0.8);
     transition: 0.1s;
 }
+
+@media (max-width: 918px) {
+  .section2{
+    padding: 30px 40px;
+  }
+
+  .card {
+    width: 280px;
+    height: 380px;
+  }
+}
+
 </style>

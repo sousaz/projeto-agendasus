@@ -92,7 +92,9 @@ export default {
 
 <style scoped>
 #doctorForm {
+  width: 100%;
   height: calc(100vh - 115px);
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -169,4 +171,5 @@ export default {
 .register-btn:hover {
   transform: scale(1.1);
 }
+
 </style>

@@ -1,5 +1,6 @@
 <template>
     <div id="nav">
+        <fa class="fa-bars" icon="bars" />
         <aside class="aside">
             <nav class="nav">
                 <router-link to="/ubs"><div class="link">Cadastrar médicos</div></router-link>
@@ -42,6 +43,27 @@ export default {
     background: #3a58f0;
 }
 
+.fa-bars {
+    color: #3a58f0;
+    margin: 10px 0 0 20px;
+    display: none;
+}
 
+@media (max-width: 886px) {
+    .aside {
+        display: none;
+    }
+
+    .fa-bars {
+        display: block;
+        position: fixed;
+    }
+}
+
+/* @media (max-width: 769px) {
+    .link {
+        height: 70px;
+    }
+} */
 
 </style>
