@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../services/api'
 
 axios.interceptors.request.use(
     config => {

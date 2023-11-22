@@ -294,7 +294,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../services/api";
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css' 
 import { formatDate } from "@vueuse/core"
@@ -497,7 +497,7 @@ export default {
       }
     },
     async register() {
-      const url = "http://localhost:3333/api/auth/register";
+      const url = "/auth/register";
 
       try {
         const response = await axios.post(url, {

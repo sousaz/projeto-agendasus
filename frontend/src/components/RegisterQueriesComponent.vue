@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "../services/api"
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import { formatDate } from '@vueuse/core'
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     async loadOptions() {
-      const url = `http://localhost:3333/api/options`;
+      const url = `/options`;
 
       try {
         const response = await axios.get(url);
@@ -71,7 +71,7 @@ export default {
       }
     },
     async register() {
-      const url = `http://localhost:3333/api/query`
+      const url = `/query`
       const start = parseInt(this.query.start.split(":")[0] * 60) + parseInt(this.query.start.split(":")[1])
       const end = parseInt(this.query.end.split(":")[0] * 60) + parseInt(this.query.end.split(":")[1])
       try {

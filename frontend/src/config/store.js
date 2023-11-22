@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../services/api'
 import Vuex from 'vuex'
 
 export default new Vuex.Store({
@@ -42,7 +42,7 @@ export default new Vuex.Store({
       const token = localStorage.getItem('token');
 
       if (token) {
-        const url = "http://localhost:3333/api/auth/validateToken";
+        const url = "/auth/validateToken";
 
         try {
           const response = await axios.post(url, { token });
@@ -62,7 +62,7 @@ export default new Vuex.Store({
       const token = localStorage.getItem('token');
 
       if (token) {
-        const url = "http://localhost:3333/api/auth/admin";
+        const url = "/auth/admin";
 
         try {
           const response = await axios.post(url, { token });
@@ -79,7 +79,7 @@ export default new Vuex.Store({
       }
     },
     async loadTable(context) {
-      const url = `http://localhost:3333/api/auth/consulta/${context.state.currentPage}/${context.state.selectedUbs}/${context.state.selectedQuery}`
+      const url = `/auth/consulta/${context.state.currentPage}/${context.state.selectedUbs}/${context.state.selectedQuery}`
       try {
         const response = await axios.get(url)
         if(response.data.length) {

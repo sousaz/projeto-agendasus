@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "../services/api"
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 export default {
@@ -72,7 +72,7 @@ export default {
     },
     methods: {
         async registerDoctor() {
-            const url = `http://localhost:3333/api/doctor`
+            const url = `/doctor`
             try {
                 const response = await axios.post(url, this.doctor)
                 toast.success(response.data["msg"], {

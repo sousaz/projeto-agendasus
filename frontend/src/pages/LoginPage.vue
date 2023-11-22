@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../services/api'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 export default {
@@ -71,7 +71,7 @@ export default {
     methods: {
     async login(e) {
       e.preventDefault()
-        const url = "http://localhost:3333/api/auth/login";
+        const url = "/auth/login";
         try {
         const response = await axios.post(url, {
             email: this.user.email,

@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "../services/api";
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 export default {
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     async makeSchedule(index) {
-      const url = `http://localhost:3333/api/consulta/${this.tableData[index]._id}`;
+      const url = `/consulta/${this.tableData[index]._id}`;
       try {
         const response = await axios.put(url, {
           horario: this.tableData[index].horario,
@@ -88,7 +88,7 @@ export default {
       }
     },
     async cancelSchedule(index) {
-      const url = `http://localhost:3333/api/cancel/${this.tableData[index]._id}`;
+      const url = `/cancel/${this.tableData[index]._id}`;
       try {
         const response = await axios.put(url, {
           horario: this.tableData[index].horario,
@@ -117,7 +117,7 @@ export default {
         try {
           this.buttonView = false
           const id = localStorage.getItem("id");
-          const url = `http://localhost:3333/api/consulta/${id}/${this.currentPage}`;
+          const url = `/consulta/${id}/${this.currentPage}`;
           const response = await axios.get(url)
           if(response.data.length) {
             this.$store.commit('setTableData', response.data)

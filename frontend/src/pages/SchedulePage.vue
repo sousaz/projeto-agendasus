@@ -22,7 +22,7 @@
 
 
 <script>
-import axios from 'axios'
+import axios from '../services/api'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import TableComponent from '../components/TableComponent.vue';
@@ -50,7 +50,7 @@ export default {
             if(this.$route.path === '/paciente/minhasconsultas'){
                 this.tableView = true
             }
-            const url = `http://localhost:3333/api/options`
+            const url = `/options`
 
             try {
                 const response = await axios.get(url)

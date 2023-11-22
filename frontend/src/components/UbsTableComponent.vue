@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '../services/api';
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 export default {
@@ -58,7 +58,7 @@ export default {
   methods: {
     async loadData() {
       try {
-          const url = `http://localhost:3333/api/consultas/${this.currentPage}`
+          const url = `/consultas/${this.currentPage}`
           const response = await axios.get(url)
           this.tableData = response.data
       } catch (error) {
@@ -78,7 +78,7 @@ export default {
     },
     async deleteSchedule(index) {
         try {
-            const url = `http://localhost:3333/api/delete/${this.tableData[index]._id}`
+            const url = `/delete/${this.tableData[index]._id}`
             const response = await axios.delete(url)
             toast.success(response.data["msg"], {
                 autoClose: 5000,
