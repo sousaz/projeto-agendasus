@@ -92,7 +92,7 @@ export default {
 
 <style scoped>
 #doctorForm {
-  height: calc(100vh - 115px);
+  height: calc(100vh - 300px);
   display: flex;
   flex-direction: column;
   justify-content: center;
