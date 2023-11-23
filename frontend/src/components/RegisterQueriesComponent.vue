@@ -125,7 +125,7 @@ export default {
 
 <style scoped>
 #queryForm {
-  height: calc(100vh - 115px);
+  height: calc(100vh - 300px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -164,14 +164,14 @@ export default {
   color: #3a58f0;
   background-color: #fff;
   width: 100%;
-  height: 97px;
+  height: 83px;
   border-radius: 10px 10px 20px 0; 
   text-align: center;
 }
 
 .form-header{
   width: 100%;
-  height: 97px;
+  height: 83px;
   color: #3a58f0;
   background-color: #3a58f0;
   border-radius: 12px 12px 0 0;
