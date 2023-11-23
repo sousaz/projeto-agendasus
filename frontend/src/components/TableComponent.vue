@@ -14,7 +14,6 @@
       </thead>
       <tbody class="table-body">
         <tr v-for="i in tableData.length" :key="i" class="table-row">
-          <td class="table-cell">{{ i + (5 * (currentPage - 1)) }}</td>
           <td class="table-cell">{{ tableData[i - 1].nome_ubs }}</td>
           <td class="table-cell">{{ tableData[i - 1].nome_medico }}</td>
           <td class="table-cell">{{ tableData[i - 1].tipo }}</td>
@@ -30,6 +29,13 @@
           </td>
         </tr>
       </tbody>
+      <tfoot class="table-body">
+        <tr class="table-row">
+          <td class="table-cell"></td>
+          <td class="table-cell"></td>
+          <td class="table-cell foot">Página atual: {{currentPage}}</td>
+        </tr>
+      </tfoot>
     </table>
     <div class="group-btn">
       <button @click="backPage()" class="schedule-btn">Voltar</button>
@@ -46,7 +52,7 @@ export default {
   name: "TableComponent",
   data() {
     return {
-      tableHeader: ["","UBS", "Médico", "Tipo", "Dia", "Horário", ""],
+      tableHeader: ["UBS", "Médico", "Tipo", "Dia", "Horário", ""],
       buttonView: true,
       currentPage: 1,
     };
@@ -174,8 +180,8 @@ export default {
 } */
 
 #table {
-  width: 80%;
-  margin: 20px 10px;
+  width: 100%;
+  margin: 20px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -184,7 +190,7 @@ export default {
 
 .group-btn {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 10px; /* Ajuste conforme necessário */
   display: flex;
   justify-content: space-around;
 }
@@ -193,6 +199,7 @@ export default {
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
+  margin: 10px 0; /* Ajuste as margens conforme necessário */
 }
 
 .table-head {
@@ -212,6 +219,19 @@ export default {
 
 .table-cell {
   padding: 10px;
+}
+
+.table-cell.foot::after {
+  content: '';
+  height: 2px;
+  display: block;
+  margin: 0 auto;
+  background-color: #3a58f0;
+  border-radius: 10px;
+}
+
+.table-foot {
+  background-color: #dce2fa;
 }
 
 .check {
@@ -276,9 +296,10 @@ export default {
     display: flex;
     flex-wrap: wrap;
     row-gap: 10px;
+  }
 }
 
-}
+
 /* @media (min-width: 800px) {
   #table {
     width: 40%;

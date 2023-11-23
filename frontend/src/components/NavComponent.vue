@@ -7,10 +7,12 @@
                 <router-link to="/ubs/consultas"><div class="link">Consultas gerais</div></router-link>
             </nav>
             <nav v-else class="nav" :class="{'menu-mobile' : showMenu}">
-                <fa @click="toggleMenu()" class="fa-bars" :class="{'rotate-bars': showMenu}" icon="bars" />
-                <router-link to="/ubs"><div @click="toggleMenu()" v-show="showMenu" class="link">Cadastrar médicos</div></router-link>
-                <router-link to="/ubs/consulta"><div @click="toggleMenu()" v-show="showMenu" class="link">Cadastrar consultas</div></router-link>
-                <router-link to="/ubs/consultas"><div @click="toggleMenu()" v-show="showMenu" class="link">Consultas gerais</div></router-link>
+                <div class="bars" @click="toggleMenu()"><fa class="fa-bars" :class="{'rotate-bars': showMenu}" icon="bars" /></div>
+                <div class="button-group">
+                    <router-link to="/ubs"><button v-show="showMenu" class="link" @click="toggleMenu()">Cadastrar médicos</button></router-link>
+                    <router-link to="/ubs/consulta"><button v-show="showMenu" class="link" @click="toggleMenu()">Cadastrar consultas</button></router-link>
+                    <router-link to="/ubs/consultas"><button v-show="showMenu" class="link"  @click="toggleMenu()">Consultas gerais</button></router-link>
+                </div>
             </nav>
         </aside>
     <!-- </div> -->
@@ -63,7 +65,6 @@ export default {
     height: 40px;
     text-align: center;
     font-size: 2rem;
-    margin-bottom: 5px;
     color: #3a58f0;
     font-family: "coves";
 }
@@ -73,10 +74,16 @@ export default {
     background: #3a58f0;
 }
 
+.bars {
+    max-width: 21px;
+    max-height: 24px;
+    position: relative;
+    top: 10px;
+    left: 20px;
+}
+
 .fa-bars {
-    position: static;
     color: #3a58f0;
-    margin: 10px 0 0 20px;
     cursor: pointer;
     font-size: 1.5rem;
     transition: transform 0.3s ease-in-out;
@@ -91,8 +98,17 @@ export default {
     top: 115px;
 }
 
+
 .rotate-bars {
     transform: rotate(90deg);
+}
+
+.button-group {
+    height: calc(100vh - 115px);
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    margin-top: 40px;
 }
 
 @media (max-width: 890px) {
@@ -104,6 +120,10 @@ export default {
         width: 100%;
         border: 2px solid #ced4eb;
         border-radius: 10px;
+    }
+
+    .nav.menu-mobile {
+        height: calc(100vh - 115px);
     }
 }
 

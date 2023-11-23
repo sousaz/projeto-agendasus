@@ -14,7 +14,6 @@
       </thead>
       <tbody class="table-body">
         <tr v-for="(data, i) in tableData" :key="i" class="table-row" :style="{background: hasMarked(data)}">
-          <td class="table-cell">{{ i + (5 * (currentPage - 1)) + 1 }}</td>
           <td class="table-cell">{{ data.nome_medico }}</td>
           <td class="table-cell">{{ data.tipo }}</td>
           <td class="table-cell">{{ data.dia }}</td>
@@ -27,6 +26,16 @@
           </td>
         </tr>
       </tbody>
+      <tfoot class="table-foot">
+        <tr class="table-row">
+          <td class="table-cell"></td>
+          <td class="table-cell"></td>
+          <td class="table-cell foot">Página atual: {{currentPage}}</td>
+          <td class="table-cell"></td>
+          <td class="table-cell"></td>
+          <td class="table-cell"></td>
+        </tr>
+      </tfoot>
     </table>
     <div class="group-btn">
       <button v-show="currentPage > 1" @click="backPage()" class="schedule-btn">Voltar</button>
@@ -49,7 +58,7 @@ export default {
   name: "UbsTableComponent",
   data() {
     return {
-      tableHeader: ["", "Médico", "Tipo", "Dia", "Horário", "Paciente", ""],
+      tableHeader: ["Médico", "Tipo", "Dia", "Horário", "Paciente", ""],
       tableData: [],
       currentPage: 1
     };
@@ -116,4 +125,7 @@ export default {
   font-family: 'coves';
   text-align: center;
 }
+
+
+
 </style>
