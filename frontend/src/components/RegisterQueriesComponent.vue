@@ -59,10 +59,11 @@ export default {
   methods: {
     async loadOptions() {
       const url = `/options/${localStorage.getItem("id")}`;
+      console.log(url);
 
       try {
         const response = await axios.get(url);
-        this.doctorOptions = response.data.medico;
+        this.doctorOptions = response.data;
       } catch (error) {
         toast.error(error.response.data["msg"], {
             autoClose: 5000,
