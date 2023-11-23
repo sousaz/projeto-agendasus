@@ -272,6 +272,12 @@ export default {
     margin: 10px;
   }
 
+  .group-btn {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+
 }
 @media (min-width: 800px) {
   #table {
