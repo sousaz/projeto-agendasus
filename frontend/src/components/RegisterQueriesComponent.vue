@@ -135,7 +135,7 @@ export default {
 }
 
 .form-query {
-  margin: 20px auto;  
+  margin: 5px auto;  
   width: 310px;
   height: 400px;
   background-color: #fff;
