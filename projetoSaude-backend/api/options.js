@@ -17,7 +17,6 @@ function filterRepetitiveOptions(data) {
 module.exports = {
     async loadOptions(req, res){
         const id = req.params.id
-        console.log(id);
         try {
             const medico = await Medico.find({id_ubs: id}, 'nome especialidade')
             res.status(200).json(medico)
