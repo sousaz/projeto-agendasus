@@ -125,7 +125,7 @@ export default {
 
 <style scoped>
 #queryForm {
-  height: calc(100vh - 0);
+  height: calc(100vh - 115px);
   display: flex;
   flex-direction: column;
   justify-content: center;
