@@ -279,9 +279,9 @@ export default {
 }
 
 }
-@media (min-width: 800px) {
+/* @media (min-width: 800px) {
   #table {
     width: 40%;
   }
-}
+} */
 </style>

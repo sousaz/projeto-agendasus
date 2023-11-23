@@ -120,8 +120,12 @@ export default {
 } */
 
 @media (max-width: 481px) {
+  .logo {
+    font-size: 1rem;
+  }
+
   .logoName {
-    display: none;
+    font-size: 1rem;
   }
 
   .header{
