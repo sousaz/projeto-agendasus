@@ -19,9 +19,18 @@ module.exports = {
         const id = req.params.id
         console.log(id);
         try {
-            const consulta = id ? await Consulta.find({id_ubs: id}, 'tipo') : await Consulta.find({}, 'tipo')
+            const medico = await Medico.find({id_ubs: id}, 'nome especialidade')
+            res.status(200).json(medico)
+        } catch (error) {
+            console.log(error);
+            res.status(400).json({ msg: 'Erro na consulta'})
+        } 
+    },
+    async loadOptionsSchedule(req, res){
+        try {
+            const consulta =  await Consulta.find({}, 'tipo')
             const ubs = await Ubs.find({}, 'nome')
-            const medico = id ? await Medico.find({id_ubs: id}, 'nome especialidade') : await Medico.find({}, 'nome especialidade')
+            const medico = await Medico.find({}, 'nome especialidade')
             const tipo = filterRepetitiveOptions(consulta)
             const response = {
                 tipoConsulta: tipo,

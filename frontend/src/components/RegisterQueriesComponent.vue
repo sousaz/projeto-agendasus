@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     async loadOptions() {
-      const url = `/options`;
+      const url = `/options/${localStorage.getItem("id")}`;
 
       try {
         const response = await axios.get(url);
@@ -124,7 +124,7 @@ export default {
 
 <style scoped>
 #queryForm {
-  height: calc(100vh - 115px);
+  height: calc(100vh - 0);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -178,7 +178,7 @@ export default {
 
 .inputs {
   width: 100%;
-  padding: 10px;
+  padding: 7px;
   box-sizing: border-box;
   border: 1px solid #dadff5;
   border-radius: 10px;
