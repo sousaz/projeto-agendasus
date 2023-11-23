@@ -651,7 +651,19 @@ label {
   background-color: #dadff5;
   border-radius: 20px 20px 20px 20px;
   width: 550px;
+  overflow-y: auto; /* Add vertical scrollbar if needed */
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #7085ed;
+  border-radius: 10px;
+  /* background-color: purple; */
+}
+
 
 .box {
   display: flex;
@@ -766,7 +778,6 @@ span.validacao {
     width: 100%;
     max-height: 500px; /* Set a maximum height */
     padding: 0 20px 15px 20px;
-    overflow-y: auto; /* Add vertical scrollbar if needed */
   }
 
   .box {
