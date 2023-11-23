@@ -572,6 +572,7 @@ h1 {
   border-radius: 20px;
 
   font-family: "coves";
+  overflow-y: auto;
 }
 
 .button {
@@ -650,8 +651,9 @@ label {
   padding: 0 100px 15px 100px;
   background-color: #dadff5;
   border-radius: 20px 20px 20px 20px;
-  width: 550px;
-  overflow-y: auto; /* Add vertical scrollbar if needed */
+  max-width: 550px;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 ::-webkit-scrollbar {
@@ -735,7 +737,7 @@ input {
   background-color: #3a58f0;
   transition: 0.4s;
 
-  width: 80px;
+  width: 88px;
   height: auto;
 
   border-style: none;
@@ -765,7 +767,7 @@ span.validacao {
 
 @media screen and (max-width: 768px) {
   .container {
-    width: 80%;
+    width: 100%;
   }
 
 .botao-ok:hover,
@@ -775,7 +777,7 @@ span.validacao {
 }
 
   .form-group {
-    width: 100%;
+    max-width: 100%;
     max-height: 500px; /* Set a maximum height */
     padding: 0 20px 15px 20px;
   }
