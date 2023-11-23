@@ -29,4 +29,11 @@ body{
   background-color: #e8ebf9;
 }
 
+@media(max-width: 800px) {
+  #userwayAccessibilityIcon {
+  position: block;
+  left: 75%;
+}
+}
+
 </style>
