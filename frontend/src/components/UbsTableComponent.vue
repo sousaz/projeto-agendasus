@@ -15,7 +15,6 @@
       <tbody class="table-body">
         <tr v-for="(data, i) in tableData" :key="i" class="table-row" :style="{background: hasMarked(data)}">
           <td class="table-cell">{{ i + (5 * (currentPage - 1)) + 1 }}</td>
-          <td class="table-cell">{{ data.nome_ubs }}</td>
           <td class="table-cell">{{ data.nome_medico }}</td>
           <td class="table-cell">{{ data.tipo }}</td>
           <td class="table-cell">{{ data.dia }}</td>
@@ -50,7 +49,7 @@ export default {
   name: "UbsTableComponent",
   data() {
     return {
-      tableHeader: ["", "UBS", "Médico", "Tipo", "Dia", "Horário", "Paciente", ""],
+      tableHeader: ["", "Médico", "Tipo", "Dia", "Horário", "Paciente", ""],
       tableData: [],
       currentPage: 1
     };
@@ -58,7 +57,8 @@ export default {
   methods: {
     async loadData() {
       try {
-          const url = `/consultas/${this.currentPage}`
+          const url = `/consultas/${this.currentPage}/${localStorage.getItem("id")}`
+          console.log(url)
           const response = await axios.get(url)
           this.tableData = response.data
       } catch (error) {
@@ -106,14 +106,14 @@ export default {
 
 <style>
 #ubsTable{
-    height: calc(100vh - 155px);
-    width: 50%;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: 'coves';
-    text-align: center;
+  height: calc(100vh - 155px);
+  width: 50%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'coves';
+  text-align: center;
 }
 </style>

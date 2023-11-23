@@ -16,10 +16,12 @@ function filterRepetitiveOptions(data) {
 
 module.exports = {
     async loadOptions(req, res){
+        const id = req.params.id
+        console.log(id);
         try {
-            const consulta = await Consulta.find({}, 'tipo')
+            const consulta = id ? await Consulta.find({id_ubs: id}, 'tipo') : await Consulta.find({}, 'tipo')
             const ubs = await Ubs.find({}, 'nome')
-            const medico = await Medico.find({}, 'nome especialidade')
+            const medico = id ? await Medico.find({id_ubs: id}, 'nome especialidade') : await Medico.find({}, 'nome especialidade')
             const tipo = filterRepetitiveOptions(consulta)
             const response = {
                 tipoConsulta: tipo,
@@ -28,6 +30,7 @@ module.exports = {
             }
             res.status(200).json(response)
         } catch (error) {
+            console.log(error);
             res.status(400).json({ msg: 'Erro na consulta'})
         } 
     },

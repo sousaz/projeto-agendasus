@@ -29,7 +29,7 @@ export default {
 }
 
 
-@media (max-width: 886px) {
+@media (max-width: 890px) {
     #ubsPage {
         grid-template-columns: 1fr;
     }

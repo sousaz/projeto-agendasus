@@ -563,9 +563,6 @@ h1 {
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.212);
   border-radius: 20px;
 }
@@ -766,10 +763,10 @@ span.validacao {
 }
 
   .form-group {
+    width: 100%;
     max-height: 500px; /* Set a maximum height */
-    overflow-y: auto; /* Add vertical scrollbar if needed */
     padding: 0 20px 15px 20px;
-    width: auto;
+    overflow-y: auto; /* Add vertical scrollbar if needed */
   }
 
   .box {

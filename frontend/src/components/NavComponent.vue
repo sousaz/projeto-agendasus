@@ -37,7 +37,7 @@ export default {
         },
         checkScreen() {
             this.windowWidth = window.innerWidth
-            if(this.windowWidth <= 886) {
+            if(this.windowWidth <= 890) {
                 this.mobile = true
                 return
             }
@@ -74,7 +74,7 @@ export default {
 }
 
 .fa-bars {
-    position: fixed;
+    position: static;
     color: #3a58f0;
     margin: 10px 0 0 20px;
     cursor: pointer;
@@ -95,7 +95,7 @@ export default {
     transform: rotate(90deg);
 }
 
-@media (max-width: 886px) {
+@media (max-width: 890px) {
     .aside {
         background-color: #e8ebf9;
     }

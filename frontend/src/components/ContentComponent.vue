@@ -17,7 +17,7 @@ export default {
 
     @media (max-width: 886px) {
         .content {
-            width: 100vw;
+            width: calc(100vw - 41px);
         }
     }
 </style>

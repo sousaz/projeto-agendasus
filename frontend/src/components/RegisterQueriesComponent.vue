@@ -124,7 +124,7 @@ export default {
 
 <style scoped>
 #queryForm {
-  height: calc(100vh - 300px);
+  height: calc(100vh - 115px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -134,6 +134,7 @@ export default {
 }
 
 .form-query {
+  margin: 20px auto;  
   width: 310px;
   height: 400px;
   background-color: #fff;
@@ -211,5 +212,16 @@ export default {
 
 .select {
   color: #3a58f0;
+}
+
+@media (max-height: 840px) {
+  #queryForm {
+    align-items: flex-start;
+  }
+
+  .form-query {
+    position: block;
+    margin-top: 60px;
+  }
 }
 </style>

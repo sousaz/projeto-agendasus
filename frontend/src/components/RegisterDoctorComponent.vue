@@ -92,7 +92,6 @@ export default {
 
 <style scoped>
 #doctorForm {
-  width: 100%;
   height: calc(100vh - 115px);
   display: flex;
   flex-direction: column;
@@ -132,6 +131,8 @@ export default {
 }
 
 .input-field {
+  display: flex;
+  flex-direction: column;
   margin: 10px 20px;
 }
 
@@ -170,6 +171,17 @@ export default {
 
 .register-btn:hover {
   transform: scale(1.1);
+}
+
+@media (max-height: 840px) {
+  #doctorForm {
+    align-items: flex-start;
+  }
+
+  .form-doctor {
+    position: block;
+    margin-top: 60px;
+  }
 }
 
 </style>

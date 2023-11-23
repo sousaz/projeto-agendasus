@@ -9,7 +9,7 @@ const queries = require("../api/queries")
 
 
 
-router.route('/consultas/:page').get(auth.checkAdmin, schedule.loadAllSchedules)
+router.route('/consultas/:page/:id').get(auth.checkAdmin, schedule.loadAllSchedules)
 
 router.route("/auth/register").post(auth.registerUser)
 
@@ -21,11 +21,11 @@ router.route("/consulta/:id").put(auth.checkToken, schedule.makeSchedule)
 
 router.route("/auth/validateToken").post(auth.validateToken)
 
-router.route("/options").get(auth.checkToken, options.loadOptions)
+router.route("/options/:id").get(options.loadOptions)
 
 router.route("/doctor").post(auth.checkAdmin, doctor.createDoctor)
 
-router.route("/ubs").post(auth.checkAdmin, ubs.createUbs)
+router.route("/ubs").post(ubs.createUbs)
 
 router.route("/query").post(auth.checkAdmin, queries.createQuery)
 
