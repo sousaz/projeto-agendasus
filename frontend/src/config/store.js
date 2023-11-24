@@ -86,10 +86,11 @@ export default new Vuex.Store({
           context.commit('setTableData', response.data)
           context.commit('setLoadMore', true)
         }else {
+          context.commit('setTableData', response.data)
           context.commit('setLoadMore', false)
         }
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
   }

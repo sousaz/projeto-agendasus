@@ -652,8 +652,7 @@ label {
   background-color: #dadff5;
   border-radius: 20px 20px 20px 20px;
   max-width: 550px;
-  max-height: 500px;
-  overflow-y: auto;
+  /* max-height: 500px; */
 }
 
 ::-webkit-scrollbar {
@@ -780,6 +779,7 @@ span.validacao {
     max-width: 100%;
     max-height: 500px; /* Set a maximum height */
     padding: 0 20px 15px 20px;
+    overflow-y: auto;
   }
 
   .box {

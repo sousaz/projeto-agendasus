@@ -67,7 +67,6 @@ export default {
     async loadData() {
       try {
           const url = `/consultas/${this.currentPage}/${localStorage.getItem("id")}`
-          console.log(url)
           const response = await axios.get(url)
           this.tableData = response.data
       } catch (error) {

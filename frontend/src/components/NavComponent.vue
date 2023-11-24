@@ -31,7 +31,6 @@ export default {
     created() {
         window.addEventListener("resize", this.checkScreen)
         this.checkScreen()
-        console.log(this.windowWidth)
     },
     methods: {
         toggleMenu() {
