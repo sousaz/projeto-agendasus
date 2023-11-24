@@ -175,14 +175,14 @@ export default {
 }
 
 @media (max-height: 840px) {
-  /* #doctorForm {
+  #doctorForm {
     align-items: flex-start;
-  } */
+  }
 
-  /* .form-doctor {
+  .form-doctor {
     position: block;
     margin-top: 60px;
-  } */
+  }
 }
 
 </style>
