@@ -92,7 +92,7 @@ export default {
 
 <style scoped>
 #doctorForm {
-  width: calc(100vw - 41px);
+  width: calc(100vw - 300px);
   height: calc(100vh - 300px);
   display: flex;
   flex-direction: column;
@@ -175,14 +175,14 @@ export default {
 }
 
 @media (max-height: 840px) {
-  #doctorForm {
+  /* #doctorForm {
     align-items: flex-start;
-  }
+  } */
 
-  .form-doctor {
+  /* .form-doctor {
     position: block;
     margin-top: 60px;
-  }
+  } */
 }
 
 </style>

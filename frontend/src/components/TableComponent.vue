@@ -180,7 +180,7 @@ export default {
 } */
 
 #table {
-  width: 100%;
+  width: 45%;
   margin: 20px 0;
   display: flex;
   flex-direction: column;
@@ -290,6 +290,9 @@ export default {
 
   .table {
     margin: 10px;
+  }
+  #table {
+    width: 100%;
   }
 
   .group-btn {

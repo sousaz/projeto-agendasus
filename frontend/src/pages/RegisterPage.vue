@@ -560,6 +560,7 @@ h1 {
   align-items: center;
   justify-content: center;
   background-color: #e8ebf9;
+  overflow-y: auto;
 }
 
 .container {
@@ -572,7 +573,6 @@ h1 {
   border-radius: 20px;
 
   font-family: "coves";
-  overflow-y: auto;
 }
 
 .button {
@@ -586,7 +586,7 @@ legend {
   justify-content: center;
 
   background-color: #ffffff;
-  padding: 10px;
+  padding: 7px;
   margin-bottom: 10px;
   border-radius: 5px;
   color: #3a58f0;
@@ -614,7 +614,7 @@ label {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 30px;
+  padding: 25px;
 }
 
 .title {
