@@ -103,7 +103,7 @@ export default {
 }
 
 .button-group {
-    height: calc(100vh - 115px);
+    height: calc(100vh - 139px);
     display: flex;
     flex-direction: column;
     row-gap: 20px;
@@ -122,7 +122,7 @@ export default {
     }
 
     .nav.menu-mobile {
-        height: calc(100vh - 115px);
+        height: calc(100vh - 139px);
     }
 }
 

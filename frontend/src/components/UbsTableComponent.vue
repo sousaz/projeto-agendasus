@@ -114,7 +114,7 @@ export default {
 
 <style>
 #ubsTable{
-  height: calc(100vh - 155px);
+  height: calc(100vh - 139px);
   width: 50%;
   margin: 20px auto;
   display: flex;

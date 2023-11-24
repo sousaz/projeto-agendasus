@@ -32,11 +32,11 @@ export default {
 @media (max-width: 890px) {
     #ubsPage {
         grid-template-rows: 115px 24px 1fr;
-        grid-template-columns: 300px 1fr;
+        grid-template-columns: 1fr;
         grid-template-areas: 
-            "header header"
-            "nav nav"
-            "content content";
+            "header"
+            "nav"
+            "content";
         }
 }
 </style>
