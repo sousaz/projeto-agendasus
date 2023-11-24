@@ -67,6 +67,7 @@ export default {
                 cpf: "",
                 crm: "",
                 especialidade: "",
+                id_ubs: localStorage.getItem("id")
             }
         }
     },
