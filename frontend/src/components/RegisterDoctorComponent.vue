@@ -67,7 +67,7 @@ export default {
                 cpf: "",
                 crm: "",
                 especialidade: "",
-                id_ubs: localStorage.getItem("id")
+                id_ubs: ""
             }
         }
     },
@@ -75,6 +75,7 @@ export default {
         async registerDoctor() {
             const url = `/doctor`
             try {
+                this.doctor.id_ubs = localStorage.getItem("id")
                 const response = await axios.post(url, this.doctor)
                 toast.success(response.data["msg"], {
                     autoClose: 5000,
