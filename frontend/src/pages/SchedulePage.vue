@@ -86,7 +86,7 @@ export default {
 <style>
 #schedule {
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 139px);
     display: flex;
     justify-content: center;
     align-items: center;

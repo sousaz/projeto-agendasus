@@ -1,6 +1,6 @@
 <template>
-  <div v-if="tableData" id="ubsTable">
-    <table class="table">
+  <div id="ubsTable">
+    <table v-if="tableData && !isLoading" class="table">
       <thead class="table-head">
         <tr class="table-row">
           <th
@@ -37,7 +37,8 @@
         </tr>
       </tfoot>
     </table>
-    <div class="group-btn">
+    <LoadingComponent v-else/>
+    <div v-if="tableData && !isLoading" class="group-btn">
       <button v-show="currentPage > 1" @click="backPage()" class="schedule-btn">Voltar</button>
       <button
         @click="nextPage()"
@@ -54,22 +55,30 @@
 import axios from '../services/api';
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import LoadingComponent from './LoadingComponent.vue';
 export default {
   name: "UbsTableComponent",
+  components: {
+    LoadingComponent
+  },
   data() {
     return {
       tableHeader: ["Médico", "Tipo", "Dia", "Horário", "Paciente", ""],
       tableData: [],
-      currentPage: 1
+      currentPage: 1,
+      isLoading: false
     };
   },
   methods: {
     async loadData() {
+      this.isLoading = true
       try {
           const url = `/consultas/${this.currentPage}/${localStorage.getItem("id")}`
           const response = await axios.get(url)
           this.tableData = response.data
+          this.isLoading = false
       } catch (error) {
+          this.isLoading = false
           toast.error(error.response.data["msg"], {
               autoClose: 5000,
               position: 'top-right',
@@ -85,15 +94,18 @@ export default {
         this.loadData()
     },
     async deleteSchedule(index) {
+      this.isLoading = true
         try {
             const url = `/delete/${this.tableData[index]._id}`
             const response = await axios.delete(url)
+            this.isLoading = false
             toast.success(response.data["msg"], {
                 autoClose: 5000,
                 position: 'top-right',
             })
             this.loadData()
         } catch (error) {
+            this.isLoading = false
             toast.error(error.response.data["msg"], {
                 autoClose: 5000,
                 position: 'top-right',

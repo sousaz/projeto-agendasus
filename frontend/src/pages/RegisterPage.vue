@@ -282,7 +282,7 @@
               >
                 Continuar
               </button>
-              <button type="button" @click="sendForm()" v-else class="botao-ok">
+              <button :disabled="disabled" type="button" @click="sendForm()" v-else class="botao-ok">
                 Cadastrar
               </button>
             </div>
@@ -302,6 +302,7 @@ export default {
   name: "CadastrarPage",
   data() {
     return {
+      disabled: false,
       currentForm: 0,
       user: {
         name: "",
@@ -352,8 +353,10 @@ export default {
       return this.currentForm === 0 ? this.currentForm : this.currentForm--;
     },
     sendForm() {
+      this.disabled = true
       if (this.currentForm === 2 && this.form3Validation() === false) return;
       this.register();
+      this.disabled = false
     },
     nameValidation() {
       return this.user.name.length < 3

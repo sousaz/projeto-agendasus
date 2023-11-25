@@ -35,7 +35,7 @@
             </div>
 
             <div>
-              <button @click="login" type="submit" class="enter-btn">Entrar</button>
+              <button :disabled="disabled" @click="login" type="submit" class="enter-btn">Entrar</button>
             </div>
 
             <div>
@@ -66,10 +66,12 @@ export default {
         email: "",
         password: "",
         },
+        disabled: false
     };
     },
     methods: {
     async login(e) {
+      this.disabled = true
       e.preventDefault()
         const url = "/auth/login";
         try {
@@ -88,6 +90,7 @@ export default {
               position: 'top-right',
           })
           this.$store.commit('login')
+          this.disabled = false
           setTimeout(() => {
               if(!response.data.admin) 
                 return this.$router.push('/');
@@ -97,6 +100,7 @@ export default {
         }
 
         } catch (error) {
+          this.disabled = false
           toast.error(error.response.data["msg"], {autoClose: 2000,})
         return;
         }

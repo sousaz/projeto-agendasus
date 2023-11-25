@@ -1,6 +1,6 @@
 <template>
-  <div v-if="tableData" id="table">
-    <table class="table">
+  <div id="table">
+    <table v-if="tableData && !isLoading" class="table">
       <thead class="table-head">
         <tr class="table-row">
           <th
@@ -37,7 +37,8 @@
         </tr>
       </tfoot>
     </table>
-    <div class="group-btn">
+    <LoadingComponent v-else/>
+    <div v-if="tableData && !isLoading" class="group-btn">
       <button @click="backPage()" class="schedule-btn">Voltar</button>
       <button @click="nextPage()" v-show="tableData.length === 5" class="schedule-btn">Carregar mais</button>
     </div>
@@ -48,13 +49,18 @@
 import axios from "../services/api";
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import LoadingComponent from './LoadingComponent.vue';
 export default {
   name: "TableComponent",
+  components: {
+    LoadingComponent
+  },
   data() {
     return {
       tableHeader: ["UBS", "Médico", "Tipo", "Dia", "Horário", ""],
       buttonView: true,
       currentPage: 1,
+      isLoading: false
     };
   },
   computed: {
@@ -67,6 +73,7 @@ export default {
   },
   methods: {
     async makeSchedule(index) {
+      this.isLoading = true
       const url = `/consulta/${this.tableData[index]._id}`;
       try {
         const response = await axios.put(url, {
@@ -77,6 +84,7 @@ export default {
           id_ubs: this.tableData[index].id_ubs,
           id_paciente: localStorage.getItem("id"),
         });
+        this.isLoading = false
         await this.$store.dispatch("loadTable");
         toast.success(response.data["msg"], {
             autoClose: 5000,
@@ -87,6 +95,7 @@ export default {
           this.$router.push('/');
         }, 2000);
       } catch (error) {
+        this.isLoading = false
         toast.error(error.response.data["msg"], {
             autoClose: 5000,
             position: 'top-right',
@@ -94,6 +103,7 @@ export default {
       }
     },
     async cancelSchedule(index) {
+      this.isLoading = true
       const url = `/cancel/${this.tableData[index]._id}`;
       try {
         const response = await axios.put(url, {
@@ -104,6 +114,7 @@ export default {
           id_ubs: this.tableData[index].id_ubs,
           id_paciente: localStorage.getItem("id"),
         });
+        this.isLoading = false
         toast.success(response.data["msg"], {
             autoClose: 5000,
             position: 'top-right',
@@ -112,6 +123,7 @@ export default {
           this.$router.push('/');
         }, 2000);
       } catch (error) {
+        this.isLoading = false
         toast.error(error.response.data["msg"], {
             autoClose: 5000,
             position: 'top-right',
@@ -120,11 +132,14 @@ export default {
     },
     async loadMyTable() {
       if(this.$route.path === '/paciente/minhasconsultas'){
+        this.$store.commit('setTableData', {})
+        this.isLoading = true
         try {
           this.buttonView = false
           const id = localStorage.getItem("id");
           const url = `/consulta/${id}/${this.currentPage}`;
           const response = await axios.get(url)
+          this.isLoading = false
           if(response.data.length) {
             this.$store.commit('setTableData', response.data)
             this.$store.commit('setLoadMore', true)
@@ -132,6 +147,7 @@ export default {
             this.$store.commit('setLoadMore', false)
           }
         } catch (error) {
+          this.isLoading = false
           toast.error(error.response.data["msg"], {
             autoClose: 5000,
             position: 'top-right',
@@ -140,12 +156,15 @@ export default {
       }
     },
     async decideTable() {
+      this.isLoading = true
       if(this.$route.path === '/paciente/minhasconsultas'){
         this.loadMyTable()
+        this.isLoading = false
         return
       }
 
       await this.$store.dispatch('loadTable')
+      this.isLoading = false
     },
     backPage() {
       this.currentPage--

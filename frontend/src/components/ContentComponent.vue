@@ -13,6 +13,7 @@ export default {
 <style>
     .content {
         grid-area: content;
+        height: calc(100vh - 139px);
     }
 
     @media (max-width: 886px) {
