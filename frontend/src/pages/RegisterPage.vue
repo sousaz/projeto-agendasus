@@ -527,6 +527,7 @@ export default {
             this.$router.push('/login');
         }, 2000);
       } catch (error) {
+        this.disabled = false
         toast.error(error.response.data["msg"], {
           autoClose: 5000,
           position: 'top-right',
