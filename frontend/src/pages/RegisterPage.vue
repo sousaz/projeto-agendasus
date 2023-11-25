@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <div class="container">
+    <div v-if="!isLoading" class="container">
       <form class="form">
         <div class="form-header">
           <div class="title">
@@ -282,7 +282,7 @@
               >
                 Continuar
               </button>
-              <button :disabled="disabled" type="button" @click="sendForm()" v-else class="botao-ok">
+              <button type="button" @click="sendForm()" v-else class="botao-ok">
                 Cadastrar
               </button>
             </div>
@@ -290,6 +290,7 @@
         </div>
       </form>
     </div>
+    <LoadingComponent v-else/>
   </div>
 </template>
 
@@ -298,11 +299,15 @@ import axios from "../services/api";
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css' 
 import { formatDate } from "@vueuse/core"
+import LoadingComponent from '../components/LoadingComponent.vue';
 export default {
   name: "CadastrarPage",
+  components: {
+    LoadingComponent
+  },
   data() {
     return {
-      disabled: false,
+      isLoading: false,
       currentForm: 0,
       user: {
         name: "",
@@ -498,7 +503,7 @@ export default {
       }
     },
     async register() {
-      this.disabled = true
+      this.isLoading = true
       const url = "/auth/register";
 
       try {
@@ -522,12 +527,12 @@ export default {
             autoClose: 5000,
             position: 'top-right',
         })
-        this.disabled = false
+        this.isLoading = false
         setTimeout(() => {
             this.$router.push('/login');
         }, 2000);
       } catch (error) {
-        this.disabled = false
+        this.isLoading = false
         toast.error(error.response.data["msg"], {
           autoClose: 5000,
           position: 'top-right',

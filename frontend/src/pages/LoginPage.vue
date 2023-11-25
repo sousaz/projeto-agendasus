@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <div class="container">
+    <div v-if="!isLoading" class="container">
       <form action="#">
         <div class="form-content">
           <div class="form-header">
@@ -35,7 +35,7 @@
             </div>
 
             <div>
-              <button :disabled="disabled" @click="login" type="submit" class="enter-btn">Entrar</button>
+              <button @click="login" type="submit" class="enter-btn">Entrar</button>
             </div>
 
             <div>
@@ -51,6 +51,7 @@
         </div>
       </form>
     </div>
+    <LoadingComponent v-else/>
   </div>
 </template>
 
@@ -58,20 +59,24 @@
 import axios from '../services/api'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import LoadingComponent from '../components/LoadingComponent.vue'
 export default {
     name: "LoginPage",
+    components: {
+      LoadingComponent,
+    },
     data() {
     return {
         user: {
         email: "",
         password: "",
         },
-        disabled: false
+        isLoading: false
     };
     },
     methods: {
     async login(e) {
-      this.disabled = true
+      this.isLoading = true
       e.preventDefault()
         const url = "/auth/login";
         try {
@@ -90,7 +95,7 @@ export default {
               position: 'top-right',
           })
           this.$store.commit('login')
-          this.disabled = false
+          this.isLoading = false
           setTimeout(() => {
               if(!response.data.admin) 
                 return this.$router.push('/');
@@ -100,7 +105,7 @@ export default {
         }
 
         } catch (error) {
-          this.disabled = false
+          this.isLoading = false
           toast.error(error.response.data["msg"], {autoClose: 2000,})
         return;
         }

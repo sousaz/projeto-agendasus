@@ -84,13 +84,12 @@ export default {
           id_ubs: this.tableData[index].id_ubs,
           id_paciente: localStorage.getItem("id"),
         });
-        this.isLoading = false
         await this.$store.dispatch("loadTable");
         toast.success(response.data["msg"], {
             autoClose: 5000,
             position: 'top-right',
         })
-        
+        this.isLoading = false
         setTimeout(() => {
           this.$router.push('/');
         }, 2000);
@@ -114,11 +113,11 @@ export default {
           id_ubs: this.tableData[index].id_ubs,
           id_paciente: localStorage.getItem("id"),
         });
-        this.isLoading = false
         toast.success(response.data["msg"], {
             autoClose: 5000,
             position: 'top-right',
         })
+        this.isLoading = false
         setTimeout(() => {
           this.$router.push('/');
         }, 2000);
