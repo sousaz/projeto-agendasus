@@ -303,7 +303,7 @@ export default {
   data() {
     return {
       disabled: false,
-      currentForm: 0,
+      currentForm: 2,
       user: {
         name: "",
         lastName: "",
@@ -353,10 +353,8 @@ export default {
       return this.currentForm === 0 ? this.currentForm : this.currentForm--;
     },
     sendForm() {
-      this.disabled = true
       if (this.currentForm === 2 && this.form3Validation() === false) return;
-      this.register();
-      this.disabled = false
+        this.register();
     },
     nameValidation() {
       return this.user.name.length < 3
@@ -500,6 +498,7 @@ export default {
       }
     },
     async register() {
+      this.disabled = true
       const url = "/auth/register";
 
       try {
@@ -523,6 +522,7 @@ export default {
             autoClose: 5000,
             position: 'top-right',
         })
+        this.disabled = false
         setTimeout(() => {
             this.$router.push('/login');
         }, 2000);
