@@ -303,7 +303,7 @@ export default {
   data() {
     return {
       disabled: false,
-      currentForm: 2,
+      currentForm: 0,
       user: {
         name: "",
         lastName: "",
