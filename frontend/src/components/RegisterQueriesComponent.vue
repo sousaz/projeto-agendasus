@@ -27,7 +27,7 @@
         </div>
         <div class="input-field">
           <label for="range" class="label"
-            >Tempo médio da consulta</label
+            >Tempo médio da consulta(minutos)</label
           >
           <input class="inputs" v-model="query.range" type="number" name="range" id="range" />
         </div>
