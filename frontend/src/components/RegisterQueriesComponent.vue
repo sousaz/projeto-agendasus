@@ -105,7 +105,7 @@ export default {
           horario: hourFormated,
         });
 
-        // Incrementa o horário pelo range em milissegundos
+        
         currentTime = currentTime + range;
       }
 
